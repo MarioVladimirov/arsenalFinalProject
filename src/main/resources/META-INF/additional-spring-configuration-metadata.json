@@ -1,0 +1,9 @@
+{
+  "properties": [
+    {
+      "name": "spring.mvc.sql.init.mode",
+      "type": "java.lang.String",
+      "description": "Description for spring.mvc.sql.init.mode."
+    }
+
+  ] }
