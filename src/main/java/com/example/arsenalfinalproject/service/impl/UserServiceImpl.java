@@ -10,6 +10,8 @@ import com.example.arsenalfinalproject.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.Set;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -31,7 +33,7 @@ public class UserServiceImpl implements UserService {
         RoleEntity roleUser = roleRepository.findByRole(RoleNameEnum.USER);
 
         UserEntity newUser = modelMapper.map(userRegisterServiceModel,UserEntity.class);
-        newUser.setRole(roleUser);
+        newUser.setRoles(Set.of(roleUser));
 
         userRepository.save(newUser);
 
