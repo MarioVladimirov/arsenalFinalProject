@@ -1,0 +1,47 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/commons :: head"></head>
+
+<body class="content">
+<header th:replace="fragments/commons :: navigation_menubar"></header>
+<main>
+
+    <img src="/images/shop/onlineShopBanner.jpg" class="img-fluid" alt="Banner Arsenal Bulgaria Shop">
+    <section>
+        <div  class="row row-cols-1 row-cols-md-5 g-4">
+            <div th:each="p : ${allProducts}" class="col">
+                <div class="card">
+                    <img th:src="${p.getUrlPicture()}" class="card-img-top" alt="..." height="150px" width="120px"/>
+                    <div class="card-body">
+                        <h5 th:text="${p.getProductName()}" class="card-title text-center">Playing cards "Arsenal Bulgaria"</h5>
+                        <p th:text="${p.getPrice()}" class="card-text text-center"> price: 3.00lv</p>
+
+                        <div class="ipsFieldRow_content m-2">
+                            <input type="number" name="quantity" size="1" value="1" class="ipsField_short" min="1"
+                                   max="10"
+                                   step="any">
+                        </div>
+
+                        <div class="card-footer text-center">
+                            <button class="button" style="vertical-align:middle"><span>Buy</span></button>
+                        </div>
+                        <div class="card-footer text-center">
+                            <button class="button" style="vertical-align:middle"><span>Edit</span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+<footer th:replace="fragments/commons :: footer"></footer>
+
+
+</body>
+
+</html>
+

@@ -1,11 +1,10 @@
 package com.example.arsenalfinalproject.model.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -17,8 +16,8 @@ public class UserEntity extends BaseEntity{
         private LocalDate dateBirth;
         private String email;
         private String password;
-        private RoleEntity role;
-
+        private Set<RoleEntity> roles = new HashSet<>();
+   
         public UserEntity() {
         }
 
@@ -81,12 +80,12 @@ public class UserEntity extends BaseEntity{
                 this.password = password;
         }
 
-        @ManyToOne
-        public RoleEntity getRole() {
-                return role;
+        @ManyToMany(fetch = FetchType.EAGER)
+        public Set<RoleEntity> getRoles() {
+                return roles;
         }
 
-        public void setRole(RoleEntity role) {
-                this.role = role;
+        public void setRoles(Set<RoleEntity> roles) {
+                this.roles = roles;
         }
 }
