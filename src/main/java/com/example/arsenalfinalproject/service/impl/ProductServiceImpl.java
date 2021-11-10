@@ -133,7 +133,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductAddServiceModel addOffer(ProductAddBindingModel productAddBindingModel, String userIdentifier) {
-        UserEntity userEntity = userService.findByUsername(userIdentifier).orElseThrow();
+
         ProductAddServiceModel productAddServiceModel =
                 modelMapper.map(productAddBindingModel,ProductAddServiceModel.class);
 
@@ -142,6 +142,11 @@ public class ProductServiceImpl implements ProductService {
         ProductEntity savedProduct = productRepository.save(newProduct);
 
         return modelMapper.map(savedProduct,ProductAddServiceModel.class);
+    }
+
+    @Override
+    public void deleteProduct(Long id) {
+        productRepository.deleteById(id);
     }
 
     private ProductsViewModel mapDetailsProduct(ProductEntity productEntity) {

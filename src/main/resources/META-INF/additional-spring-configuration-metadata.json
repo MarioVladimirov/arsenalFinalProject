@@ -4,6 +4,16 @@
       "name": "spring.mvc.sql.init.mode",
       "type": "java.lang.String",
       "description": "Description for spring.mvc.sql.init.mode."
+    },
+    {
+      "name": "spring.jpa.logging.level.org.hibernate.SQL",
+      "type": "java.lang.String",
+      "description": "Description for spring.jpa.logging.level.org.hibernate.SQL."
+    },
+    {
+      "name": "spring.jpa.mvc.hiddenmethod.filter.enabled",
+      "type": "java.lang.String",
+      "description": "Description for spring.jpa.mvc.hiddenmethod.filter.enabled."
     }
 
   ] }

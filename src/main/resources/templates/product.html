@@ -24,12 +24,28 @@
                                    step="any">
                         </div>
 
-                        <div sec:authorize="hasAnyRole('USER','MODERATOR')"  class="card-footer text-center">
+                        <div sec:authorize="hasAnyRole('USER') or hasAnyRole('MODERATOR')"  class="card-footer text-center">
                             <button class="button" style="vertical-align:middle"><a>Buy</a></button>
                         </div>
-                        <div sec:authorize="hasRole('ADMIN')" class="card-footer text-center">
-                            <button  class="button" style="vertical-align:middle"><a th:href="@{/product/{id}/edit(id=*{p.id})}">Edit</a></button>
-                        </div>
+                        <th:block sec:authorize="hasRole('ADMIN')">
+
+                            <div  class="card-footer text-center">
+                                <button  class="button" style="vertical-align:middle"><a th:href="@{/product/{id}/edit(id=*{p.id})}">Edit</a></button>
+                            </div>
+                            <div class="card-footer text-center">
+
+<!--                                <button  class="buttonDelete" style="vertical-align:middle"><a >Delete</a></button>-->
+
+
+                                <form class="" th:action="@{/product/{id}(id=*{p.id})}" th:method="delete">
+<!--                                    <input type="submit" class="" value="Delete"/>-->
+                                    <button class="button" style="vertical-align:middle"><a>Delete</a></button>
+                                </form>
+
+
+                            </div>
+                        </th:block>
+
                     </div>
                 </div>
             </div>

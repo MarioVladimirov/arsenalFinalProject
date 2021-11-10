@@ -19,4 +19,6 @@ public interface ProductService {
     void updateOffer(ProductUpdateServiceModel productUpdateServiceModel);
 
     ProductAddServiceModel addOffer(ProductAddBindingModel productAddBindingModel, String userIdentifier);
+
+    void deleteProduct(Long id);
 }

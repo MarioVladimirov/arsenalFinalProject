@@ -305,7 +305,7 @@ padding-top: 40px;
     margin: 5px;
 }
 
-.button a {
+.button a , .delete2 input[value=Delete] {
     color: rgb(255, 255, 255);
     text-decoration: none;
     cursor: pointer;
@@ -314,7 +314,7 @@ padding-top: 40px;
     transition: 0.5s;
 }
 
-.button a:after {
+.button a:after , .delete2 input[value=Delete]:after {
     color: rgb(255, 255, 255);
     text-decoration: none;
     content: '\00bb';
@@ -325,16 +325,31 @@ padding-top: 40px;
     transition: 0.5s;
 }
 
-.button:hover a {
+.button:hover a , .delete2:hover input[value=Delete]   {
     color: rgb(255, 255, 255);
     padding-right: 25px;
 }
 
-.button:hover a:after {
+.button:hover a:after , .delete2:hover input[value=Delete]:after  {
     color: rgb(255, 255, 255);
     text-decoration: none;
     opacity: 1;
     right: 0;
+}
+/*BUTTON Delete*/
+.buttonDelete {
+    display: inline-block;
+    border-radius: 4px;
+    background-color: rgb(223, 32, 32);
+    border: none;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 16px;
+    padding: 0px;
+    width: 100px;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 5px;
 }
 
 /* .navigation_bar ul li:hover .sub-menu-1 ul li{
