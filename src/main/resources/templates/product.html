@@ -1,5 +1,6 @@
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:replace="fragments/commons :: head"></head>
 
@@ -15,19 +16,19 @@
                     <img th:src="${p.getUrlPicture()}" class="card-img-top" alt="..." height="150px" width="120px"/>
                     <div class="card-body">
                         <h5 th:text="${p.getProductName()}" class="card-title text-center">Playing cards "Arsenal Bulgaria"</h5>
-                        <p th:text="${p.getPrice()}" class="card-text text-center"> price: 3.00lv</p>
+                        <p  th:text="|${p.getPrice()} lv.|" class="card-text text-center"> price: 3.00lv</p>
 
-                        <div class="ipsFieldRow_content m-2">
+                        <div sec:authorize="isAuthenticated()" class="ipsFieldRow_content m-2">
                             <input type="number" name="quantity" size="1" value="1" class="ipsField_short" min="1"
                                    max="10"
                                    step="any">
                         </div>
 
-                        <div class="card-footer text-center">
-                            <button class="button" style="vertical-align:middle"><span>Buy</span></button>
+                        <div sec:authorize="hasAnyRole('USER','MODERATOR')"  class="card-footer text-center">
+                            <button class="button" style="vertical-align:middle"><a>Buy</a></button>
                         </div>
-                        <div class="card-footer text-center">
-                            <button class="button" style="vertical-align:middle"><span>Edit</span></button>
+                        <div sec:authorize="hasRole('ADMIN')" class="card-footer text-center">
+                            <button  class="button" style="vertical-align:middle"><a th:href="@{/product/{id}/edit(id=*{p.id})}">Edit</a></button>
                         </div>
                     </div>
                 </div>

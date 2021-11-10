@@ -4,12 +4,21 @@ import java.math.BigDecimal;
 
 public class ProductsViewModel {
 
+    private Long id;
     private String urlPicture;
     private String productName;
     private BigDecimal price;
     private Integer countProduct;
 
     public ProductsViewModel() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getUrlPicture() {

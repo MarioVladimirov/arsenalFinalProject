@@ -43,7 +43,7 @@ public class ArsenalUserServiceImpl implements UserDetailsService {
                         map(r -> new SimpleGrantedAuthority("ROLE_" + r.getRole().name())).
                         collect(Collectors.toList());
 
-        return new User(
+        return new ArsenalUser(
                 userEntity.getUsername(),
                 userEntity.getPassword(),
                 auhtorities

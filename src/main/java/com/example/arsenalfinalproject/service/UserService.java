@@ -18,4 +18,6 @@ public interface UserService {
     void initializeUsersAndRoles();
 
     Optional<UserEntity> findUserById(Long id);
+
+    Optional<UserEntity> findByUsername(String userIdentifier);
 }

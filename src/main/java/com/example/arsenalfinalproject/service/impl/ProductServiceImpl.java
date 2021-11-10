@@ -1,9 +1,16 @@
 package com.example.arsenalfinalproject.service.impl;
 
+import com.example.arsenalfinalproject.model.binding.ProductAddBindingModel;
 import com.example.arsenalfinalproject.model.entity.ProductEntity;
+import com.example.arsenalfinalproject.model.entity.UserEntity;
+import com.example.arsenalfinalproject.model.service.ProductAddServiceModel;
+import com.example.arsenalfinalproject.model.service.ProductUpdateServiceModel;
 import com.example.arsenalfinalproject.model.view.ProductsViewModel;
 import com.example.arsenalfinalproject.repository.ProductRepository;
 import com.example.arsenalfinalproject.service.ProductService;
+
+import com.example.arsenalfinalproject.service.UserService;
+import com.example.arsenalfinalproject.web.exception.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -16,10 +23,14 @@ import java.util.stream.Collectors;
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
+    private final UserService userService;
     private final ModelMapper modelMapper;
 
-    public ProductServiceImpl(ProductRepository productRepository, ModelMapper modelMapper) {
+
+
+    public ProductServiceImpl(ProductRepository productRepository, UserService userService, ModelMapper modelMapper) {
         this.productRepository = productRepository;
+        this.userService = userService;
         this.modelMapper = modelMapper;
     }
 
@@ -94,7 +105,47 @@ public class ProductServiceImpl implements ProductService {
         return productRepository
                 .findAll()
                 .stream()
-                .map(productEntity -> modelMapper.map(productEntity , ProductsViewModel.class))
+                .map(productEntity -> modelMapper.map(productEntity, ProductsViewModel.class))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public ProductsViewModel findById(Long id) {
+
+        return productRepository.findById(id)
+                .map(this::mapDetailsProduct)
+                .get();
+    }
+
+    @Override
+    public void updateOffer(ProductUpdateServiceModel productUpdateServiceModel) {
+        ProductEntity productEntity =
+                productRepository.findById(productUpdateServiceModel.getId()).orElseThrow(() ->
+                        new ObjectNotFoundException("Offer with id " + productUpdateServiceModel.getId() + " not found!"));
+
+        productEntity.setProductName(productUpdateServiceModel.getProductName());
+        productEntity.setCountProduct(productUpdateServiceModel.getCountProduct());
+        productEntity.setPrice(productUpdateServiceModel.getPrice());
+        productEntity.setUrlPicture(productUpdateServiceModel.getUrlPicture());
+
+        productRepository.save(productEntity);
+    }
+
+    @Override
+    public ProductAddServiceModel addOffer(ProductAddBindingModel productAddBindingModel, String userIdentifier) {
+        UserEntity userEntity = userService.findByUsername(userIdentifier).orElseThrow();
+        ProductAddServiceModel productAddServiceModel =
+                modelMapper.map(productAddBindingModel,ProductAddServiceModel.class);
+
+        ProductEntity newProduct = modelMapper.map(productAddServiceModel,ProductEntity.class);
+
+        ProductEntity savedProduct = productRepository.save(newProduct);
+
+        return modelMapper.map(savedProduct,ProductAddServiceModel.class);
+    }
+
+    private ProductsViewModel mapDetailsProduct(ProductEntity productEntity) {
+
+        return this.modelMapper.map(productEntity, ProductsViewModel.class);
     }
 }

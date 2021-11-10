@@ -72,8 +72,8 @@
                         <div class="sub-menu-1">
 
                             <ul class="dropdown-content">
-                                <li><a href="#">Add item</a>
-                                <li><a href="#">Add news</a>
+                                <li><a th:href="@{/product/add}">Add item</a>
+                                <li><a th:href="@{/news/add}">Add news</a>
                                 <li><a href="#">Change username status</a>
                             </ul>
                         </div>
@@ -81,7 +81,7 @@
                     <li sec:authorize="hasRole('MODERATOR')"><a href="#">Moderator</a>
                         <div class="sub-menu-1">
                             <ul class="dropdown-content">
-                                <li><a href="#">Add news</a>
+                                <li><a th:href="@{/news/add}">Add news</a>
                             </ul>
                         </div>
                     </li>

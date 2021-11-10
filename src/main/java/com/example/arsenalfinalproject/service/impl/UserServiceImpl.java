@@ -42,6 +42,11 @@ public class UserServiceImpl implements UserService {
         return userRepository.findById(id);
     }
 
+    @Override
+    public Optional<UserEntity> findByUsername(String userIdentifier) {
+        return userRepository.findByUsername(userIdentifier);
+    }
+
     private void initializeUsers() {
         if (userRepository.count() == 0) {
             RoleEntity adminRole = roleRepository.findByRole(RoleNameEnum.ADMIN);
