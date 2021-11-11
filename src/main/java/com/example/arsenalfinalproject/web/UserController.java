@@ -5,6 +5,7 @@ import com.example.arsenalfinalproject.model.binding.UserRegisterBindingModel;
 import com.example.arsenalfinalproject.model.service.UserRegisterServiceModel;
 import com.example.arsenalfinalproject.service.UserService;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,7 +45,7 @@ public class UserController {
     @PostMapping("/register")
     public String registerConfirm(@Valid UserRegisterBindingModel userRegisterBindingModel,
                                   BindingResult bindingResult,
-                                  RedirectAttributes redirectAttributes ,
+                                  RedirectAttributes redirectAttributes,
                                   HttpSession httpSession) {
 
         System.out.println();
@@ -57,12 +58,11 @@ public class UserController {
         }
 
         UserRegisterServiceModel userRegisterServiceModel =
-                modelMapper.map(userRegisterBindingModel , UserRegisterServiceModel.class);
+                modelMapper.map(userRegisterBindingModel, UserRegisterServiceModel.class);
 
         userService.registerUser(userRegisterServiceModel);
 
-        httpSession.setAttribute("message" , new Message("Your registration was successful!","success"));
-
+        httpSession.setAttribute("message", new Message("Your registration was successful!", "success"));
 
 
         return "redirect:/";
@@ -73,6 +73,20 @@ public class UserController {
     public String login() {
 
         return "login";
+    }
+
+    //When we have error login and return error
+    @PostMapping("/login-error")
+    public String failedLogin(
+            @ModelAttribute(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY)
+                    String userName,
+            RedirectAttributes attributes
+    ) {
+
+        attributes.addFlashAttribute("bad_credentials", true);
+        attributes.addFlashAttribute("username", userName);
+
+        return "redirect:/users/login";
     }
 
 

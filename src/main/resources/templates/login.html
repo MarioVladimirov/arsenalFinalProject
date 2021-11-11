@@ -13,22 +13,24 @@
         <h1 style="margin-top: 50px;">Login</h1>
         <form th:action="@{/users/login}" th:method="POST">
             <div class="txt_field">
-                <input type="text"
+                <input th:value="${username}"
+                        type="text"
                        required
                        minlength="3"
                        maxlength="20"
                        name="username">
                 <span></span>
                 <label>Username</label>
-                <small class="">
-                    <span class="text-danger invalid-feedback">User is not correct</span>
-                </small>
+<!--                <small class="">-->
+<!--                    <span class="text-danger invalid-feedback">User is not correct</span>-->
+<!--                </small>-->
             </div>
             <div class="txt_field">
                 <input type="password"
                        required
                        minlength="5"
                        maxlength="30"
+
                        name="password">
                 <span></span>
                 <label>Password</label>
@@ -36,6 +38,9 @@
                     <span class="text-danger invalid-feedback">User is not correct</span>
                 </small>
             </div>
+            <p th:if="${bad_credentials}" class="errors alert alert-danger text-center">
+                &#10006 Invalid username or password.
+            </p>
             <button class="btnForm" type="submit">Login</button>
             <!-- <input type="submit" value="Login"> -->
             <div class="signup_link">

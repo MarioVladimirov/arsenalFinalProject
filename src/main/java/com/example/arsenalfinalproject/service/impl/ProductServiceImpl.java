@@ -132,7 +132,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductAddServiceModel addOffer(ProductAddBindingModel productAddBindingModel, String userIdentifier) {
+    public ProductAddServiceModel addOffer(ProductAddBindingModel productAddBindingModel) {
 
         ProductAddServiceModel productAddServiceModel =
                 modelMapper.map(productAddBindingModel,ProductAddServiceModel.class);

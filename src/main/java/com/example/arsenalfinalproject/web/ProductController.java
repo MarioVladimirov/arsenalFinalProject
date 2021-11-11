@@ -96,8 +96,7 @@ public class ProductController {
     @PostMapping("/add")
     public String addProduct(@Valid ProductAddBindingModel productAddBindingModel ,
                              BindingResult bindingResult,
-                             RedirectAttributes redirectAttributes,
-                             @AuthenticationPrincipal ArsenalUser user) {
+                             RedirectAttributes redirectAttributes) {
 
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("productAddBindingModel" , productAddBindingModel);
@@ -107,7 +106,7 @@ public class ProductController {
             return "redirect:/product/add";
         }
 
-         productService.addOffer(productAddBindingModel , user.getUserIdentifier());
+         productService.addOffer(productAddBindingModel);
 
         return "redirect:/product/all";
 
