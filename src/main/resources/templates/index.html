@@ -1,5 +1,6 @@
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:replace="fragments/commons :: head"></head>
 
@@ -43,46 +44,47 @@
         <section class="container">
 
             <div class="row">
-                <div class="side">
-                    <h2>Следващ мач</h2>
-                    <table class="table table-condensed">
-                        <thead>
-                        <tr>
-                            <td class="text-left"><img style="height: 100px" src="images/NextMatch/arsenal.png"></td>
-                            <td class="text-center" style="vertical-align: middle;"><img style="margin-right: 10px"
-                                                                                         src="images/NextMatch/premierleague.png">
-                            </td>
-                            <td class="text-right"><img style="height: 100px"
-                                                        src="images/NextMatch/crystal_palace.png"></td>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td class="text-center " colspan="3">
-                                <h3 style="margin: 0;">Арсенал — Кристал Палас</h3>
-                                <small>понеделник, 18.10.2021, 22:00</small>
-                            </td>
-                        </tr>
-                        </tbody>
-                        <tbody>
+                <div th:replace="fragments/commons :: leftColumn"></div>
+<!--                <div class="side">-->
+<!--                    <h2>Следващ мач</h2>-->
+<!--                    <table class="table table-condensed">-->
+<!--                        <thead>-->
+<!--                        <tr>-->
+<!--                            <td class="text-left"><img style="height: 100px" src="images/NextMatch/arsenal.png"></td>-->
+<!--                            <td class="text-center" style="vertical-align: middle;"><img style="margin-right: 10px"-->
+<!--                                                                                         src="images/NextMatch/premierleague.png">-->
+<!--                            </td>-->
+<!--                            <td class="text-right"><img style="height: 100px"-->
+<!--                                                        src="images/NextMatch/crystal_palace.png"></td>-->
+<!--                        </tr>-->
+<!--                        </thead>-->
+<!--                        <tbody>-->
+<!--                        <tr>-->
+<!--                            <td class="text-center " colspan="3">-->
+<!--                                <h3 style="margin: 0;">Арсенал — Кристал Палас</h3>-->
+<!--                                <small>понеделник, 18.10.2021, 22:00</small>-->
+<!--                            </td>-->
+<!--                        </tr>-->
+<!--                        </tbody>-->
+<!--                        <tbody>-->
 
-                        <td class="text-center " colspan="3">
-                            <iframe src="https://arsenal-bulgaria.com/page/table-short.php" width="100%"
-                                    height="200px"></iframe>
-                        </td>
+<!--                        <td class="text-center " colspan="3">-->
+<!--                            <iframe src="https://arsenal-bulgaria.com/page/table-short.php" width="100%"-->
+<!--                                    height="200px"></iframe>-->
+<!--                        </td>-->
 
-                        </tbody>
-                        <tbody>
+<!--                        </tbody>-->
+<!--                        <tbody>-->
 
-                        <td class="text-center " colspan="3">
+<!--                        <td class="text-center " colspan="3">-->
 
-                            <a href="/question.html" tabindex="-1" aria-disabled="true"> <img src="images/quiz.png"
-                                                                                              class="img-thumbnail"
-                                                                                              alt="Quiz for Arsenal"></a>
-                        </td>
-                        </tbody>
-                    </table>
-                </div>
+<!--                            <a href="/question.html" tabindex="-1" aria-disabled="true"> <img src="images/quiz.png"-->
+<!--                                                                                              class="img-thumbnail"-->
+<!--                                                                                              alt="Quiz for Arsenal"></a>-->
+<!--                        </td>-->
+<!--                        </tbody>-->
+<!--                    </table>-->
+<!--                </div>-->
 
                 <div class="main">
                     <div th:each="m : ${allnews}" >
@@ -100,8 +102,10 @@
                             мъжете в
                             тяхната т.н. „мъжка“ игра и които са присъщи само и единствено на „футболните амазонки“..
                         </p>
-                        <button class="button" style="vertical-align:middle"><a>read more </a></button>
-                        <button class="button" style="vertical-align:middle"><a>Edit </a></button>
+                        <button class="button" style="vertical-align:middle"><a th:href="@{/news/details/{id}(id=*{m.id})}">read more </a></button>
+
+                        <button sec:authorize="hasAnyRole('ADMIN') or hasAnyRole('MODERATOR')"
+                                class="button" style="vertical-align:middle"><a>Edit </a></button>
 
                         <hr class="line">
                     </div>

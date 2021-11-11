@@ -1,0 +1,109 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="fragments/commons :: head"></head>
+
+<body class="content">
+<header th:replace="fragments/commons :: navigation_menubar">
+
+</header>
+    <main>
+        <section class="container">
+
+            <div class="row" style="margin-top: 50px;"  >
+                <div th:replace="fragments/commons :: leftColumn"></div>
+
+                <div class="main">
+                    <div th:object="${newsDetails}" class="container">
+                        <h1 th:text="*{topic}">Дамите - футбол, вдъхновение, страст и благотворителност!</h1>
+                        <h5 th:text="|от *{user.username}, *{localDate}|">от Mario, Dec 7, 2017</h5>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="imgAbt">
+                                    <img width="100%" height="100%" th:src="*{urlPictureNews}" />
+                                </div>
+                            </div>
+                            <div th:text="*{description}" class="col-md-12">
+                                <p>Някои твърдят, че футбола е „мъжка“ игра. Оооо, тeзи хора явно никога не са гледали
+                                    как
+                                    го играят представителките на „нежния“ пол. Нещо повече, те със сигурност не са били
+                                    на
+                                    игрищата на „Грийнспорт“ в столичния квартал Слатина миналата събота. А, трябваше!
+                                    Защото, така щяха да усетят една истинска страст, неподправена емоция и хъс, които
+                                    много....
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Comment section -->
+
+        <div class="container mt-5 p-4">
+            <div class="d-flex justify-content-center row">
+                <div class="col-md-12">
+                    <div class="d-flex flex-column comment-section">
+                        <!-- comentar -->
+                        <div class="bg-white p-2">
+
+                            <div class="d-flex flex-column justify-content-start ml-2"><span
+                                    class="d-block font-weight-bold name">Marry Andrews</span><span
+                                    class="date text-black-50">Shared publicly - Jan 2020</span></div>
+
+                            <div class="mt-2">
+                                <p class="comment-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                                </p>
+                            </div>
+
+                        </div>
+
+                        <div class="bg-white p-2">
+                            <div class="d-flex flex-row user-info"><img class="rounded-circle"
+                                    src="https://i.imgur.com/RpzrMR2.jpg" width="40">
+                                <div class="d-flex flex-column justify-content-start ml-2"><span
+                                        class="d-block font-weight-bold name">Marry Andrews</span><span
+                                        class="date text-black-50">Shared publicly - Jan 2020</span></div>
+                            </div>
+                            <div class="mt-2">
+                                <p class="comment-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                                </p>
+                            </div>
+
+                        </div>
+                        <div class="bg-white">
+                            <div class="d-flex flex-row fs-12">
+                                <div class="like p-2 cursor"><i class="fa fa-thumbs-o-up"></i><span
+                                        class="ml-1">Like</span></div>
+                                <div class="like p-2 cursor"><i class="fa fa-commenting-o"></i><span
+                                        class="ml-1">Comment</span></div>
+
+                            </div>
+                        </div>
+                        <div sec:authorize="isAuthenticated()" class="bg-light p-2">
+                            <div class="d-flex flex-row align-items-start"><img class="rounded-circle"
+                                    src="https://i.imgur.com/RpzrMR2.jpg" width="40"><textarea
+                                    class="form-control ml-1 shadow-none textarea"></textarea></div>
+                            <div class="mt-2 text-right"><button class="btn btn-primary btn-sm  "
+                                    type="button">Post comment</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </main>
+<footer th:replace="fragments/commons :: footer"></footer>
+
+</body>
+
+</html>

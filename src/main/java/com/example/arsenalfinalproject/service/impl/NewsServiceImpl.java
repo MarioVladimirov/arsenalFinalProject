@@ -52,17 +52,21 @@ public class NewsServiceImpl implements NewsService {
 
     }
 
+    @Override
+    public NewsViewModel findById(Long id) {
+        return
+                this.newsRepository.findById(id)
+                .map(news -> modelMapper.map(news , NewsViewModel.class)).get();
+
+    }
+
 
     @Override
     public List<NewsViewModel> findAllNews() {
         return newsRepository
                 .findAll()
                 .stream()
-                .map(news -> {
-                    NewsViewModel newsViewModel = modelMapper.map(news , NewsViewModel.class);
-
-                    return newsViewModel;
-                })
+                .map(news -> modelMapper.map(news , NewsViewModel.class))
                 .collect(Collectors.toList());
     }
 

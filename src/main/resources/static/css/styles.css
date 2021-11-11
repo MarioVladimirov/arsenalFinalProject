@@ -705,4 +705,38 @@ a {
 li {
     list-style: none;
 }
- 
+
+/*STATISTIC*/
+.skill{
+    background: rgb(228, 182, 108);
+    font-family: Gill Sans, sans-serif;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.skill h3 {
+    margin: 5px;
+}
+
+.skill h1 {
+    text-align: center;
+}
+
+.skill {
+    width: 500px;
+    margin: 60px auto;
+    color: rgb(58, 50, 29);
+    padding: 20px;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+
+.skill li {
+    margin: 20px 0;
+    padding: 10px;
+}
+
+
+
+
+

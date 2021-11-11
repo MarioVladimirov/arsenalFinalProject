@@ -6,7 +6,7 @@ import java.time.LocalDate;
 
 public class NewsViewModel {
 
-
+    private Long id;
     private String urlPictureNews;
     private String Topic;
     private String description;
@@ -14,6 +14,14 @@ public class NewsViewModel {
     private LocalDate localDate;
 
     public NewsViewModel() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getUrlPictureNews() {

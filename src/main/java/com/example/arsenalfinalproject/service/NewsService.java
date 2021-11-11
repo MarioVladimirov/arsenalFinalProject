@@ -10,4 +10,6 @@ public interface NewsService {
     List<NewsViewModel> findAllNews();
 
     void initializeNews();
+
+    NewsViewModel findById(Long id);
 }

@@ -1,5 +1,6 @@
 package com.example.arsenalfinalproject.config;
 
+import com.example.arsenalfinalproject.model.entity.enums.RoleNameEnum;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -27,8 +28,9 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                 .authorizeRequests()
                 //access to all static resources
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                // allows access to the home page , login and registration
-               .antMatchers("/" , "/users/login" , "/users/register" , "news/topic" , "/product/all").permitAll()
+                // allows access to the home page , login , registration , prodcut all , news details
+               .antMatchers("/" , "/users/login" , "/users/register" , "/news/details/{id}" , "/product/all" ).permitAll()
+                .antMatchers("/statistics" , "/product/add").hasRole(RoleNameEnum.ADMIN.name())
                 //all other pages for unauthnticated users
                 .antMatchers("/**").authenticated()
 
