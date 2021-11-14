@@ -34,7 +34,6 @@
 .nav-item , input[value=Logout] {
 
     display: inline-block;
-
     border-radius: 8px;
     padding: 15px;
     margin: 10px;
@@ -708,33 +707,27 @@ li {
 
 /*STATISTIC*/
 .skill{
-    background: rgb(228, 182, 108);
+    background: rgb(224, 193, 155);
     font-family: Gill Sans, sans-serif;
     list-style: none;
     padding: 0;
     margin: 0;
 }
 
-.skill h3 {
-    margin: 5px;
-}
+/*.skill h3 {*/
+/*    margin: 5px;*/
+/*}*/
 
-.skill h1 {
-    text-align: center;
-}
+/*.skill h1 {*/
+/*    text-align: center;*/
+/*}*/
 
-.skill {
-    width: 500px;
-    margin: 60px auto;
-    color: rgb(58, 50, 29);
-    padding: 20px;
-    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
-}
 
-.skill li {
-    margin: 20px 0;
-    padding: 10px;
-}
+
+/*.skill li {*/
+/*    margin: 20px 0;*/
+/*    padding: 10px;*/
+/*}*/
 
 
 

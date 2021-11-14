@@ -11,7 +11,7 @@ public interface UserService {
 
     boolean isUserNameFree(String userName);
 
-    void registerUser(UserRegisterServiceModel userRegisterServiceModel);
+    void registerUserAndLogin(UserRegisterServiceModel userRegisterServiceModel);
 
     boolean isEmailFree(String email);
 

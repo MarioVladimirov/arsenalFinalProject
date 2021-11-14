@@ -8,6 +8,10 @@ import com.example.arsenalfinalproject.repository.RoleRepository;
 import com.example.arsenalfinalproject.repository.UserRepository;
 import com.example.arsenalfinalproject.service.UserService;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -21,20 +25,22 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final ArsenalUserServiceImpl arsenalUserService;
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, ArsenalUserServiceImpl arsenalUserService, ModelMapper modelMapper, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.arsenalUserService = arsenalUserService;
         this.modelMapper = modelMapper;
         this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public void initializeUsersAndRoles() {
-            initializeRoles();
-            initializeUsers();
+        initializeRoles();
+        initializeUsers();
     }
 
     @Override
@@ -90,7 +96,7 @@ public class UserServiceImpl implements UserService {
     }
 
     private void initializeRoles() {
-        if(roleRepository.count() == 0) {
+        if (roleRepository.count() == 0) {
             RoleEntity adminRole = new RoleEntity();
             adminRole.setRole(RoleNameEnum.ADMIN);
 
@@ -100,16 +106,15 @@ public class UserServiceImpl implements UserService {
             RoleEntity userRole = new RoleEntity();
             userRole.setRole(RoleNameEnum.USER);
 
-            roleRepository.saveAll(List.of(adminRole,moderatorRole,userRole));
+            roleRepository.saveAll(List.of(adminRole, moderatorRole, userRole));
         }
-
 
 
     }
 
 
     @Override
-    public void registerUser(UserRegisterServiceModel userRegisterServiceModel) {
+    public void registerUserAndLogin(UserRegisterServiceModel userRegisterServiceModel) {
 
         RoleEntity roleUser = roleRepository.findByRole(RoleNameEnum.USER);
 
@@ -123,8 +128,20 @@ public class UserServiceImpl implements UserService {
         newUser.setPassword(passwordEncoder.encode(userRegisterServiceModel.getPassword()));
         newUser.setRoles(Set.of(roleUser));
 
+        newUser = userRepository.save(newUser);
 
-        userRepository.save(newUser);
+        // Registration in Spring and login user auto
+
+        UserDetails principal = arsenalUserService.loadUserByUsername(newUser.getUsername());
+        Authentication authentication = new UsernamePasswordAuthenticationToken(
+                principal,
+                newUser.getPassword(),
+                principal.getAuthorities()
+        );
+
+        SecurityContextHolder
+                .getContext()
+                .setAuthentication(authentication);
 
     }
 
@@ -137,8 +154,6 @@ public class UserServiceImpl implements UserService {
     public boolean isEmailFree(String email) {
         return userRepository.findByEmailIgnoreCase(email).isEmpty();
     }
-
-
 
 
 }

@@ -48,7 +48,7 @@ public class UserController {
                                   RedirectAttributes redirectAttributes,
                                   HttpSession httpSession) {
 
-        System.out.println();
+
 
         if (bindingResult.hasErrors() || !userRegisterBindingModel.getPassword().equals(userRegisterBindingModel.getConfirmPassword())) {
             redirectAttributes.addFlashAttribute("userRegisterBindingModel", userRegisterBindingModel);
@@ -60,7 +60,7 @@ public class UserController {
         UserRegisterServiceModel userRegisterServiceModel =
                 modelMapper.map(userRegisterBindingModel, UserRegisterServiceModel.class);
 
-        userService.registerUser(userRegisterServiceModel);
+        userService.registerUserAndLogin(userRegisterServiceModel);
 
         httpSession.setAttribute("message", new Message("Your registration was successful!", "success"));
 
