@@ -12,4 +12,7 @@ public interface NewsService {
     void initializeNews();
 
     NewsViewModel findById(Long id);
+
+    boolean isExistId(Long id);
+
 }

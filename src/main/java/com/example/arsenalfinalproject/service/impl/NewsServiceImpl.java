@@ -60,6 +60,11 @@ public class NewsServiceImpl implements NewsService {
 
     }
 
+    @Override
+    public boolean isExistId(Long id) {
+        return newsRepository.existsById(id);
+    }
+
 
     @Override
     public List<NewsViewModel> findAllNews() {

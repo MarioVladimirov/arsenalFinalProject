@@ -41,7 +41,7 @@
 <!--                            <button class="buttonLogout" style="vertical-align:middle"><a class="nav-link">Logout</a></button>-->
                             <input class="btn btn-link nav-link" type="submit" value="Logout">
                         </form> </li>
-                    <li class="nav-item" sec:authorize="isAuthenticated()"><a href="#" class="nav-link "><i class="fas fa-user"></i></a></li
+                    <li class="nav-item" sec:authorize="isAuthenticated()"><a href="#" class="nav-link "><i class="fas fa-user"></i></a></li>
                 </ul>
             </div>
 
@@ -75,7 +75,7 @@
                             <ul class="dropdown-content">
                                 <li><a th:href="@{/product/add}">Add item</a>
                                 <li><a th:href="@{/news/add}">Add news</a>
-                                <li><a href="#">Change username status</a>
+                                <li><a th:href="@{/admin/adminchangeprofile}">Change username status</a>
                                 <li><a th:href="@{/statistics}">Statistics</a>
                             </ul>
                         </div>

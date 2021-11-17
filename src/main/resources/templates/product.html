@@ -27,7 +27,8 @@
                         <div sec:authorize="hasAnyRole('USER') or hasAnyRole('MODERATOR')"  class="card-footer text-center">
                             <button class="button" style="vertical-align:middle"><a>Buy</a></button>
                         </div>
-                        <th:block sec:authorize="hasRole('ADMIN')">
+<!--                        sec:authorize="hasRole('ADMIN')"-->
+                        <th:block >
 
                             <div  class="card-footer text-center">
                                 <button  class="button" style="vertical-align:middle"><a th:href="@{/product/{id}/edit(id=*{p.id})}">Edit</a></button>

@@ -1,8 +1,11 @@
 package com.example.arsenalfinalproject.service;
 
 import com.example.arsenalfinalproject.model.entity.UserEntity;
+import com.example.arsenalfinalproject.model.service.UserChangeProfileServiceModel;
 import com.example.arsenalfinalproject.model.service.UserRegisterServiceModel;
+import com.example.arsenalfinalproject.model.view.UserViewModel;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UserService {
@@ -20,4 +23,16 @@ public interface UserService {
     Optional<UserEntity> findUserById(Long id);
 
     Optional<UserEntity> findByUsername(String userIdentifier);
+
+    List<UserViewModel> getAllUsers();
+
+    void editUserRole(Long idUser, String role);
+
+
+    String getUsernameById(Long id);
+
+    void changeProfileRole(UserChangeProfileServiceModel serviceModel);
+
+
+    List<UserViewModel> findByKeyword(String keyword);
 }

@@ -21,4 +21,6 @@ public interface ProductService {
     ProductAddServiceModel addOffer(ProductAddBindingModel productAddBindingModel);
 
     void deleteProduct(Long id);
+
+    boolean isOwner(String userName , Long id);
 }

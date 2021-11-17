@@ -2,13 +2,11 @@ package com.example.arsenalfinalproject.web;
 
 import com.example.arsenalfinalproject.model.binding.ProductAddBindingModel;
 import com.example.arsenalfinalproject.model.binding.ProductUpdateBindingModel;
-import com.example.arsenalfinalproject.model.service.ProductAddServiceModel;
 import com.example.arsenalfinalproject.model.service.ProductUpdateServiceModel;
 import com.example.arsenalfinalproject.model.view.ProductsViewModel;
 import com.example.arsenalfinalproject.service.ProductService;
-import com.example.arsenalfinalproject.service.impl.ArsenalUser;
 import org.modelmapper.ModelMapper;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @Controller
 @RequestMapping("/product")
@@ -70,13 +69,14 @@ public class ProductController {
 
         }
 
+
+
         ProductUpdateServiceModel productUpdateServiceModel =
                 modelMapper.map(productUpdateBindingModel , ProductUpdateServiceModel.class);
 
         productUpdateServiceModel.setId(id);
 
         productService.updateOffer(productUpdateServiceModel);
-
         return "redirect:/product/all";
     }
 
@@ -112,13 +112,13 @@ public class ProductController {
 
     }
         //DELETE
+    @PreAuthorize("@productServiceImpl.isOwner(#principal.name , #id)")
     @DeleteMapping("/{id}")
-    public String deleteProduct(@PathVariable Long id) {
+    public String deleteProduct(@PathVariable Long id , Principal principal) {
         productService.deleteProduct(id);
 
         return "redirect:/product/all";
     }
-
 
 
 

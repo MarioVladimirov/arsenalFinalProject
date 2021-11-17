@@ -2,7 +2,9 @@ package com.example.arsenalfinalproject.service.impl;
 
 import com.example.arsenalfinalproject.model.binding.ProductAddBindingModel;
 import com.example.arsenalfinalproject.model.entity.ProductEntity;
+import com.example.arsenalfinalproject.model.entity.RoleEntity;
 import com.example.arsenalfinalproject.model.entity.UserEntity;
+import com.example.arsenalfinalproject.model.entity.enums.RoleNameEnum;
 import com.example.arsenalfinalproject.model.service.ProductAddServiceModel;
 import com.example.arsenalfinalproject.model.service.ProductUpdateServiceModel;
 import com.example.arsenalfinalproject.model.view.ProductsViewModel;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -147,6 +150,31 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void deleteProduct(Long id) {
         productRepository.deleteById(id);
+    }
+
+    @Override
+    public boolean isOwner(String userName, Long id) {
+
+        Optional<ProductEntity> productOpt = productRepository
+                .findById(id);
+
+        Optional<UserEntity> caller = userService.findByUsername(userName);
+
+        if (productOpt.isEmpty() || caller.isEmpty()) {
+            return false;
+        }else  {
+            ProductEntity productEntity = productOpt.get();
+
+            return isAdmin(caller.get());
+        }
+    }
+
+    private boolean isAdmin(UserEntity user) {
+        return user
+                .getRoles()
+                .stream()
+                .map(RoleEntity::getRole)
+                .anyMatch(r -> r== RoleNameEnum.ADMIN);
     }
 
     private ProductsViewModel mapDetailsProduct(ProductEntity productEntity) {

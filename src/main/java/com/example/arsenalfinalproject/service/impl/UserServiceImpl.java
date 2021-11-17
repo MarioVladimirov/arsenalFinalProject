@@ -3,10 +3,14 @@ package com.example.arsenalfinalproject.service.impl;
 import com.example.arsenalfinalproject.model.entity.RoleEntity;
 import com.example.arsenalfinalproject.model.entity.UserEntity;
 import com.example.arsenalfinalproject.model.entity.enums.RoleNameEnum;
+import com.example.arsenalfinalproject.model.service.UserChangeProfileServiceModel;
 import com.example.arsenalfinalproject.model.service.UserRegisterServiceModel;
+import com.example.arsenalfinalproject.model.view.UserViewModel;
 import com.example.arsenalfinalproject.repository.RoleRepository;
 import com.example.arsenalfinalproject.repository.UserRepository;
+import com.example.arsenalfinalproject.service.RoleService;
 import com.example.arsenalfinalproject.service.UserService;
+import com.example.arsenalfinalproject.web.exception.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -15,10 +19,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.management.relation.Role;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -26,13 +32,15 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final ArsenalUserServiceImpl arsenalUserService;
+    private final RoleService roleService;
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, ArsenalUserServiceImpl arsenalUserService, ModelMapper modelMapper, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, ArsenalUserServiceImpl arsenalUserService, RoleService roleService, ModelMapper modelMapper, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.arsenalUserService = arsenalUserService;
+        this.roleService = roleService;
         this.modelMapper = modelMapper;
         this.passwordEncoder = passwordEncoder;
     }
@@ -52,6 +60,9 @@ public class UserServiceImpl implements UserService {
     public Optional<UserEntity> findByUsername(String userIdentifier) {
         return userRepository.findByUsername(userIdentifier);
     }
+
+
+
 
     private void initializeUsers() {
         if (userRepository.count() == 0) {
@@ -153,6 +164,69 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean isEmailFree(String email) {
         return userRepository.findByEmailIgnoreCase(email).isEmpty();
+    }
+
+
+    @Override
+    public void editUserRole(Long idUser, String role) {
+
+
+    }
+
+    @Override
+    public String getUsernameById(Long id) {
+        return userRepository.getById(id).getUsername();
+    }
+
+    @Override
+    public void changeProfileRole(UserChangeProfileServiceModel serviceModel) {
+        UserEntity userEntity =
+                userRepository.findById(serviceModel.getId()).orElseThrow(() ->
+                        new ObjectNotFoundException("Username with id " + serviceModel.getId() + " not found!"));
+
+
+        Set<RoleEntity> roleEntity = roleService.getRoleByName(serviceModel.getRole());
+
+        userEntity.setRoles(roleEntity);
+
+        userRepository.save(userEntity);
+
+    }
+    @Override
+    public List<UserViewModel> getAllUsers() {
+
+        List<UserEntity> userEntity = userRepository.findAll();
+
+        return getUserViewModels(userEntity);
+    }
+
+
+
+
+    @Override
+    public List<UserViewModel> findByKeyword(String keyword) {
+
+        List<UserEntity> byKeyword = userRepository.findByKeyword(keyword);
+
+        return getUserViewModels(byKeyword);
+
+
+    }
+    private List<UserViewModel> getUserViewModels(List<UserEntity> userEntity) {
+        return
+                userEntity.stream()
+                        .map(userEntity1 -> {
+                            UserViewModel userViewModel = modelMapper.map(userEntity1,UserViewModel.class);
+
+                            Set<RoleEntity> roles = userEntity1.getRoles();
+                            RoleEntity roleEntity = roles.stream().findFirst().get();
+                            String role = roleEntity.getRole().toString();
+
+                            userViewModel.setRole(role);
+
+                            return userViewModel;
+                        })
+                        .collect(Collectors.toList());
     }
 
 
