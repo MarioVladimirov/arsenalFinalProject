@@ -6,6 +6,7 @@ public class ProductsViewModel {
 
     private Long id;
     private String urlPicture;
+    private String publicId;
     private String productName;
     private BigDecimal price;
     private Integer countProduct;
@@ -17,39 +18,53 @@ public class ProductsViewModel {
         return id;
     }
 
-    public void setId(Long id) {
+    public ProductsViewModel setId(Long id) {
         this.id = id;
+        return this;
     }
 
     public String getUrlPicture() {
         return urlPicture;
     }
 
-    public void setUrlPicture(String urlPicture) {
+    public ProductsViewModel setUrlPicture(String urlPicture) {
         this.urlPicture = urlPicture;
+        return this;
+    }
+
+    public String getPublicId() {
+        return publicId;
+    }
+
+    public ProductsViewModel setPublicId(String publicId) {
+        this.publicId = publicId;
+        return this;
     }
 
     public String getProductName() {
         return productName;
     }
 
-    public void setProductName(String productName) {
+    public ProductsViewModel setProductName(String productName) {
         this.productName = productName;
+        return this;
     }
 
     public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public ProductsViewModel setPrice(BigDecimal price) {
         this.price = price;
+        return this;
     }
 
     public Integer getCountProduct() {
         return countProduct;
     }
 
-    public void setCountProduct(Integer countProduct) {
+    public ProductsViewModel setCountProduct(Integer countProduct) {
         this.countProduct = countProduct;
+        return this;
     }
 }

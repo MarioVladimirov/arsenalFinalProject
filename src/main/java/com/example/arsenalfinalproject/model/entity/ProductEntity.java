@@ -1,31 +1,22 @@
 package com.example.arsenalfinalproject.model.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import org.hibernate.engine.internal.Cascade;
+
+import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Table(name = "products")
 public class ProductEntity extends BaseEntity{
 
-    private String urlPicture;
+    private PictureEntity picture;
     private String productName;
     private BigDecimal price;
     private Integer countProduct;
 
 
     public ProductEntity() {
-    }
-
-
-    @Column( nullable = false)
-    public String getUrlPicture() {
-        return urlPicture;
-    }
-
-    public void setUrlPicture(String urlPicture) {
-        this.urlPicture = urlPicture;
     }
 
     @Column( nullable = false)
@@ -53,5 +44,14 @@ public class ProductEntity extends BaseEntity{
 
     public void setCountProduct(Integer countProduct) {
         this.countProduct = countProduct;
+    }
+
+    @OneToOne
+    public PictureEntity getPicture() {
+        return picture;
+    }
+
+    public void setPicture(PictureEntity picture) {
+        this.picture = picture;
     }
 }

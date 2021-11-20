@@ -13,22 +13,22 @@
         <div  class="row row-cols-1 row-cols-md-5 g-4">
             <div th:each="p : ${allProducts}" class="col">
                 <div class="card">
-                    <img th:src="${p.getUrlPicture()}" class="card-img-top" alt="..." height="150px" width="120px"/>
+                  <img th:src="${p.urlPicture}" class="card-img-top"  alt="..." height="150px" width="120px"/>
                     <div class="card-body">
-                        <h5 th:text="${p.getProductName()}" class="card-title text-center">Playing cards "Arsenal Bulgaria"</h5>
-                        <p  th:text="|${p.getPrice()} lv.|" class="card-text text-center"> price: 3.00lv</p>
+                        <h5 th:text="${p.productName}" class="card-title text-center">Playing cards "Arsenal Bulgaria"</h5>
+                        <p  th:text="|${p.price} lv.|" class="card-text text-center"> price: 3.00lv</p>
 
                         <div sec:authorize="isAuthenticated()" class="ipsFieldRow_content m-2">
                             <input type="number" name="quantity" size="1" value="1" class="ipsField_short" min="1"
                                    max="10"
                                    step="any">
                         </div>
-
+1
                         <div sec:authorize="hasAnyRole('USER') or hasAnyRole('MODERATOR')"  class="card-footer text-center">
                             <button class="button" style="vertical-align:middle"><a>Buy</a></button>
                         </div>
 <!--                        sec:authorize="hasRole('ADMIN')"-->
-                        <th:block >
+                        <th:block th:if="${isAdmin}" >
 
                             <div  class="card-footer text-center">
                                 <button  class="button" style="vertical-align:middle"><a th:href="@{/product/{id}/edit(id=*{p.id})}">Edit</a></button>
@@ -37,9 +37,9 @@
 
 <!--                                <button  class="buttonDelete" style="vertical-align:middle"><a >Delete</a></button>-->
 
-
                                 <form class="" th:action="@{/product/{id}(id=*{p.id})}" th:method="delete">
 <!--                                    <input type="submit" class="" value="Delete"/>-->
+                                    <input type="hidden" name="public_id" th:value="${p.publicId}">
                                     <button class="button" style="vertical-align:middle"><a>Delete</a></button>
                                 </form>
 

@@ -5,6 +5,7 @@ import com.example.arsenalfinalproject.model.binding.ProductUpdateBindingModel;
 import com.example.arsenalfinalproject.model.service.ProductUpdateServiceModel;
 import com.example.arsenalfinalproject.model.view.ProductsViewModel;
 import com.example.arsenalfinalproject.service.ProductService;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -13,8 +14,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 @RequestMapping("/product")
@@ -30,16 +34,21 @@ public class ProductController {
 
 
     @GetMapping("/all")
-    public String allProduct(Model model) {
+    public String allProduct(Model model , Principal principal) {
 
         model.addAttribute("allProducts", productService.getAllProducts());
+
+
+        if (principal != null) {
+            model.addAttribute("isAdmin", productService.isAdmin(principal.getName()));
+        }
 
         return "product";
     }
 
     //UPDATE BY ADMIN
     @GetMapping("/{id}/edit")
-    public String editProduct(@PathVariable Long id, Model model) {
+    public String editProduct(@PathVariable Long id, Model model ) {
 
         ProductsViewModel productsViewModel = productService.findById(id);
 
@@ -48,6 +57,7 @@ public class ProductController {
                 , ProductUpdateBindingModel.class);
 
         model.addAttribute("productModel", productUpdateBindingModel);
+
 
         return "editproduct";
 
@@ -68,8 +78,6 @@ public class ProductController {
             return "redirect:" + id + "/edit/errors";
 
         }
-
-
 
         ProductUpdateServiceModel productUpdateServiceModel =
                 modelMapper.map(productUpdateBindingModel , ProductUpdateServiceModel.class);
@@ -96,7 +104,7 @@ public class ProductController {
     @PostMapping("/add")
     public String addProduct(@Valid ProductAddBindingModel productAddBindingModel ,
                              BindingResult bindingResult,
-                             RedirectAttributes redirectAttributes) {
+                             RedirectAttributes redirectAttributes) throws IOException {
 
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("productAddBindingModel" , productAddBindingModel);
@@ -106,16 +114,18 @@ public class ProductController {
             return "redirect:/product/add";
         }
 
-         productService.addOffer(productAddBindingModel);
+         productService.addProduct(productAddBindingModel);
 
         return "redirect:/product/all";
 
     }
         //DELETE
+    @Transactional
     @PreAuthorize("@productServiceImpl.isOwner(#principal.name , #id)")
     @DeleteMapping("/{id}")
-    public String deleteProduct(@PathVariable Long id , Principal principal) {
-        productService.deleteProduct(id);
+    public String deleteProduct(@PathVariable Long id , Principal principal , @RequestParam("public_id") String publicId ){
+
+        productService.deleteProduct(id , publicId);
 
         return "redirect:/product/all";
     }

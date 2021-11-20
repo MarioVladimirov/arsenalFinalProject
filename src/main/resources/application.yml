@@ -7,6 +7,12 @@ spring:
   sql:
     init:
       mode: always
+
+
+  servlet:
+    multipart:
+      max-file-size: 30MB
+      max-request-size: 30MB
   jpa:
     # Choose either MySQL 8 or MySQL 5 below
     # For MySQL 8
@@ -25,7 +31,14 @@ spring:
       filter:
         enabled: true
 
+cloudinary:
+  api-key: 593539337716691
+  api-secret: ${CLOUDINARY_API_SECRET}
+  cloud-name: mariovl
+
+
 logging:
   level:
     org.hibernate.SQL: DEBUG
     org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+

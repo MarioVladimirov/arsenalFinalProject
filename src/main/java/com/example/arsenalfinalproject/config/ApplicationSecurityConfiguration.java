@@ -30,7 +30,7 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                 // allows access to the home page , login , registration , prodcut all , news details
                .antMatchers("/" , "/users/login" , "/users/register" , "/news/details/{id}" , "/product/all" ).permitAll()
-                .antMatchers("/statistics" , "/product/add" , "/admin/adminchangeprofile").hasRole(RoleNameEnum.ADMIN.name())
+                .antMatchers("/statistics" , "/product/add" , "/admin/adminchangeprofile" , "/product/{id}/edit").hasRole(RoleNameEnum.ADMIN.name())
                 //all other pages for unauthnticated users
                 .antMatchers("/**").authenticated()
 

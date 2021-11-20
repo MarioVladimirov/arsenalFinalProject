@@ -1,9 +1,6 @@
 package com.example.arsenalfinalproject.init;
 
-import com.example.arsenalfinalproject.service.MemberTopicService;
-import com.example.arsenalfinalproject.service.NewsService;
-import com.example.arsenalfinalproject.service.ProductService;
-import com.example.arsenalfinalproject.service.UserService;
+import com.example.arsenalfinalproject.service.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -21,6 +18,7 @@ public class DBInit implements CommandLineRunner {
         this.productService = productService;
         this.userService = userService;
         this.newsService = newsService;
+
     }
 
 
@@ -30,5 +28,7 @@ public class DBInit implements CommandLineRunner {
         productService.initializeProduct();
         userService.initializeUsersAndRoles();
         newsService.initializeNews();
+
+
     }
 }

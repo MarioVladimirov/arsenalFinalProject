@@ -10,17 +10,19 @@
 <main>
     <div class="item ">
         <h1 style="margin-top: 50px;">Add product</h1>
-        <form th:action="@{/product/add}" th:method="POST" th:object="${productAddBindingModel}">
+        <form th:action="@{/product/add}" th:method="POST" th:object="${productAddBindingModel}"
+              enctype="multipart/form-data">
+
             <div class="txt_field">
-                <input th:field="*{urlPicture}"
-                       type="url"
+                <input th:field="*{picture}"
+                       type="file"
                        required
                        name="imageUrl"
                        id="imageUrl">
                 <span></span>
-                <label>Image URL</label>
+                <label>Picture</label>
                 <p class="errors alert alert-danger invalid-feedback">
-                    Product image URL is required.
+                    Product picture is required.
                 </p>
             </div>
             <div class="txt_field">

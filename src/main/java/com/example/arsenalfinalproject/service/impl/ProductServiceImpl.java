@@ -1,6 +1,7 @@
 package com.example.arsenalfinalproject.service.impl;
 
 import com.example.arsenalfinalproject.model.binding.ProductAddBindingModel;
+import com.example.arsenalfinalproject.model.entity.PictureEntity;
 import com.example.arsenalfinalproject.model.entity.ProductEntity;
 import com.example.arsenalfinalproject.model.entity.RoleEntity;
 import com.example.arsenalfinalproject.model.entity.UserEntity;
@@ -8,15 +9,23 @@ import com.example.arsenalfinalproject.model.entity.enums.RoleNameEnum;
 import com.example.arsenalfinalproject.model.service.ProductAddServiceModel;
 import com.example.arsenalfinalproject.model.service.ProductUpdateServiceModel;
 import com.example.arsenalfinalproject.model.view.ProductsViewModel;
+import com.example.arsenalfinalproject.repository.PictureRepository;
 import com.example.arsenalfinalproject.repository.ProductRepository;
-import com.example.arsenalfinalproject.service.ProductService;
+import com.example.arsenalfinalproject.service.*;
 
-import com.example.arsenalfinalproject.service.UserService;
 import com.example.arsenalfinalproject.web.exception.ObjectNotFoundException;
-import org.modelmapper.ModelMapper;
-import org.springframework.stereotype.Service;
 
+import org.modelmapper.ModelMapper;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -28,67 +37,109 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final UserService userService;
     private final ModelMapper modelMapper;
+    private final PictureRepository pictureRepository;
+    private final CloudinaryService cloudinaryService;
+    private final PictureService pictureService;
 
 
-
-    public ProductServiceImpl(ProductRepository productRepository, UserService userService, ModelMapper modelMapper) {
+    public ProductServiceImpl(ProductRepository productRepository, UserService userService, ModelMapper modelMapper, PictureRepository pictureRepository, CloudinaryService pictureService, PictureService pictureService1) {
         this.productRepository = productRepository;
         this.userService = userService;
         this.modelMapper = modelMapper;
+        this.pictureRepository = pictureRepository;
+        this.cloudinaryService = pictureService;
+        this.pictureService = pictureService1;
     }
 
+    //Convert picture path to bite[] and save to DB
+    public String pictureToString(String path) throws IOException {
+        byte[] array = new byte[0];
+        try {
+            array = Files.readAllBytes(Paths.get(path));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        MultipartFile multipartFile = new MockMultipartFile("name",
+                array);
+
+        return Base64.getEncoder().encodeToString(multipartFile.getBytes());
+
+
+    }
+
+
     @Override
-    public void initializeProduct() {
+    public void initializeProduct() throws IOException {
 
         if (productRepository.count() == 0) {
             ProductEntity product1 = new ProductEntity();
             product1.setCountProduct(30);
             product1.setPrice(BigDecimal.valueOf(3));
-            product1.setUrlPicture("https://res.cloudinary.com/mariovl/image/upload/v1635949788/shop/cards_lnzojy.jpg");
+
+//            PictureEntity pictureEntity = pictureService
+//                    .createPictureEntityByPathInit("static/images/shop/cards.jpg",
+//                            "cards_cmbdgq");
+
+
+
+
+            PictureEntity pictureEntity = 
+                    pictureService.createPictureEntityByPathInit("src/main/resources/static/images/shop/cards.jpg");
+            product1.setPicture(pictureEntity);
+
             product1.setProductName("Playing cards \"Arsenal Bulgaria");
 
             ProductEntity product2 = new ProductEntity();
             product2.setCountProduct(25);
             product2.setPrice(BigDecimal.valueOf(8));
-            product2.setUrlPicture("https://res.cloudinary.com/mariovl/image/upload/v1635949789/shop/keyRing_uirpfo.jpg");
             product2.setProductName("Key ring \"15 years ASCB\"");
+            product2.setPicture( pictureService.createPictureEntityByPathInit
+                    ("src/main/resources/static/images/shop/keyRing.jpg"));
+
 
             ProductEntity product3 = new ProductEntity();
             product3.setCountProduct(65);
             product3.setPrice(BigDecimal.valueOf(10));
-            product3.setUrlPicture("https://res.cloudinary.com/mariovl/image/upload/v1635949788/shop/siliconeBracelet_j321rx.jpg");
             product3.setProductName("Silicone bracelet \"Arsenal Bulgaria\"");
+            product3.setPicture( pictureService.createPictureEntityByPathInit
+                    ("src/main/resources/static/images/shop/siliconeBracelet.jpg"));
 
             ProductEntity product4 = new ProductEntity();
             product4.setCountProduct(15);
             product4.setPrice(BigDecimal.valueOf(35));
-            product4.setUrlPicture("https://res.cloudinary.com/mariovl/image/upload/v1635949787/shop/backpack_ninmfv.jpg");
             product4.setProductName("Backpack \"Arsenal Bulgaria\"");
+            product4.setPicture( pictureService.createPictureEntityByPathInit
+                    ("src/main/resources/static/images/shop/backpack.jpg"));
+
 
             ProductEntity product5 = new ProductEntity();
             product5.setCountProduct(25);
             product5.setPrice(BigDecimal.valueOf(29));
-            product5.setUrlPicture("https://res.cloudinary.com/mariovl/image/upload/v1635949787/shop/tshirtPolo_cbmdym.jpg");
             product5.setProductName("Т-shirt \"Bulgarian Gooners\"");
-
+            product5.setPicture( pictureService.createPictureEntityByPathInit
+                    ("src/main/resources/static/images/shop/tshirtPolo.jpg"));
 
             ProductEntity product6 = new ProductEntity();
             product6.setCountProduct(55);
             product6.setPrice(BigDecimal.valueOf(68));
-            product6.setUrlPicture("https://res.cloudinary.com/mariovl/image/upload/v1635949786/shop/book_gpcr5u.jpg");
             product6.setProductName("Ian Wright - A Life In Football");
+            product6.setPicture( pictureService.createPictureEntityByPathInit
+                    ("src/main/resources/static/images/shop/book.jpg"));
 
-            ProductEntity product7 = new ProductEntity();
-            product7.setCountProduct(23);
-            product7.setPrice(BigDecimal.valueOf(6));
-            product7.setUrlPicture("https://res.cloudinary.com/mariovl/image/upload/v1635949786/shop/glass_up1yxk.jpg");
-            product7.setProductName("Beer glass \"Arsenal Bulgaria\" 420ml");
-
-            ProductEntity product8 = new ProductEntity();
-            product8.setCountProduct(42);
-            product8.setPrice(BigDecimal.valueOf(8));
-            product8.setUrlPicture("https://res.cloudinary.com/mariovl/image/upload/v1635949786/shop/pencil_f31naj.jpg");
-            product8.setProductName("Pencil case \"Arsenal Bulgaria\"");
+//            ProductEntity product7 = new ProductEntity();
+//            product7.setCountProduct(23);
+//            product7.setPrice(BigDecimal.valueOf(6));
+//            product7.setUrlPicture("https://res.cloudinary.com/mariovl/image/upload/v1635949786/shop/glass_up1yxk.jpg");
+////            product7.setUrlPicture(pictureToString("src/main/resources/static/images/shop/glass.jpg"));
+//            product7.setProductName("Beer glass \"Arsenal Bulgaria\" 420ml");
+//
+//            ProductEntity product8 = new ProductEntity();
+//            product8.setCountProduct(42);
+//            product8.setPrice(BigDecimal.valueOf(8));
+//            product8.setUrlPicture("https://res.cloudinary.com/mariovl/image/upload/v1635949786/shop/pencil_f31naj.jpg");
+////            product8.setUrlPicture(pictureToString("src/main/resources/static/images/shop/pencil.jpg"));
+//            product8.setProductName("Pencil case \"Arsenal Bulgaria\"");
 
 
             productRepository.save(product1);
@@ -97,8 +148,8 @@ public class ProductServiceImpl implements ProductService {
             productRepository.save(product4);
             productRepository.save(product5);
             productRepository.save(product6);
-            productRepository.save(product7);
-            productRepository.save(product8);
+//            productRepository.save(product7);
+//            productRepository.save(product8);
 
         }
     }
@@ -108,7 +159,16 @@ public class ProductServiceImpl implements ProductService {
         return productRepository
                 .findAll()
                 .stream()
-                .map(productEntity -> modelMapper.map(productEntity, ProductsViewModel.class))
+                .map(productEntity -> {
+                            ProductsViewModel product = modelMapper.map(productEntity, ProductsViewModel.class);
+                            String url = productEntity.getPicture().getUrl();
+                            String publicID = productEntity.getPicture().getPublicId();
+                            product
+                                    .setUrlPicture(url)
+                                    .setPublicId(publicID);
+                            return product;
+                        }
+                )
                 .collect(Collectors.toList());
     }
 
@@ -129,27 +189,34 @@ public class ProductServiceImpl implements ProductService {
         productEntity.setProductName(productUpdateServiceModel.getProductName());
         productEntity.setCountProduct(productUpdateServiceModel.getCountProduct());
         productEntity.setPrice(productUpdateServiceModel.getPrice());
-        productEntity.setUrlPicture(productUpdateServiceModel.getUrlPicture());
+        //TODO:
+        //  productEntity.setUrlPicture(productUpdateServiceModel.getUrlPicture());
 
         productRepository.save(productEntity);
     }
 
     @Override
-    public ProductAddServiceModel addOffer(ProductAddBindingModel productAddBindingModel) {
+    public ProductAddServiceModel addProduct(ProductAddBindingModel productAddBindingModel) throws IOException {
 
         ProductAddServiceModel productAddServiceModel =
-                modelMapper.map(productAddBindingModel,ProductAddServiceModel.class);
+                modelMapper.map(productAddBindingModel, ProductAddServiceModel.class);
 
-        ProductEntity newProduct = modelMapper.map(productAddServiceModel,ProductEntity.class);
+        ProductEntity newProduct = modelMapper.map(productAddServiceModel, ProductEntity.class);
+
+        PictureEntity pictureEntity = pictureService.createPictureEntity(productAddBindingModel.getPicture());
+
+        newProduct.setPicture(pictureEntity);
 
         ProductEntity savedProduct = productRepository.save(newProduct);
 
-        return modelMapper.map(savedProduct,ProductAddServiceModel.class);
+        return modelMapper.map(savedProduct, ProductAddServiceModel.class);
     }
 
     @Override
-    public void deleteProduct(Long id) {
+    public void deleteProduct(Long id , String publicId) {
         productRepository.deleteById(id);
+        cloudinaryService.delete(publicId);
+        pictureService.deletePictureByPublicId(publicId);
     }
 
     @Override
@@ -162,11 +229,17 @@ public class ProductServiceImpl implements ProductService {
 
         if (productOpt.isEmpty() || caller.isEmpty()) {
             return false;
-        }else  {
+        } else {
             ProductEntity productEntity = productOpt.get();
 
             return isAdmin(caller.get());
         }
+    }
+
+    @Override
+    public boolean isAdmin(String userName) {
+        Optional<UserEntity> caller = userService.findByUsername(userName);
+        return isAdmin(caller.get());
     }
 
     private boolean isAdmin(UserEntity user) {
@@ -174,7 +247,7 @@ public class ProductServiceImpl implements ProductService {
                 .getRoles()
                 .stream()
                 .map(RoleEntity::getRole)
-                .anyMatch(r -> r== RoleNameEnum.ADMIN);
+                .anyMatch(r -> r == RoleNameEnum.ADMIN);
     }
 
     private ProductsViewModel mapDetailsProduct(ProductEntity productEntity) {
