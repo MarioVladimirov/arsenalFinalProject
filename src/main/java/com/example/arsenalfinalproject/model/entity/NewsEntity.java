@@ -1,16 +1,13 @@
 package com.example.arsenalfinalproject.model.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "news")
 public class NewsEntity extends BaseEntity{
 
-    private String urlPictureNews;
+    private PictureEntity picture;
     private String Topic;
     private String description;
     private UserEntity user;
@@ -19,14 +16,6 @@ public class NewsEntity extends BaseEntity{
     public NewsEntity() {
     }
 
-    @Column(nullable = false)
-    public String getUrlPictureNews() {
-        return urlPictureNews;
-    }
-
-    public void setUrlPictureNews(String urlPictureNews) {
-        this.urlPictureNews = urlPictureNews;
-    }
 
     @Column(nullable = false)
     public String getTopic() {
@@ -36,6 +25,7 @@ public class NewsEntity extends BaseEntity{
     public void setTopic(String topic) {
         Topic = topic;
     }
+
     @Column(nullable = false ,columnDefinition = "TEXT")
     public String getDescription() {
         return description;
@@ -61,5 +51,15 @@ public class NewsEntity extends BaseEntity{
 
     public void setLocalDateNews(LocalDate localDateNews) {
         this.localDateNews = localDateNews;
+    }
+
+    @OneToOne
+    public PictureEntity getPicture() {
+        return picture;
+    }
+
+    public NewsEntity setPicture(PictureEntity picture) {
+        this.picture = picture;
+        return this;
     }
 }

@@ -26,14 +26,27 @@
                             </div>
                             <div th:text="*{description}" class="col-md-12">
                                 <p>Някои твърдят, че футбола е „мъжка“ игра. Оооо, тeзи хора явно никога не са гледали
-                                    как
-                                    го играят представителките на „нежния“ пол. Нещо повече, те със сигурност не са били
-                                    на
-                                    игрищата на „Грийнспорт“ в столичния квартал Слатина миналата събота. А, трябваше!
-                                    Защото, така щяха да усетят една истинска страст, неподправена емоция и хъс, които
-                                    много....
+
                                 </p>
                             </div>
+                            <th:block th:if="*{canDelete}" >
+
+                                <div  class="card-footer text-center">
+                                    <button  class="button" style="vertical-align:middle"><a th:href="@{/news/edit/{id}(id=*{id})}">Edit</a></button>
+                                </div>
+                                <div class="card-footer text-center">
+
+                                    <!--                                <button  class="buttonDelete" style="vertical-align:middle"><a >Delete</a></button>-->
+                                    <form class="" th:action="@{/news/{id}(id=*{id})}" th:method="delete">
+                                        <!--                                    <input type="submit" class="" value="Delete"/>-->
+                                        <input type="hidden" name="public_id" th:value="*{publicId}" >
+                                        <button class="button" style="vertical-align:middle"><a>Delete</a></button>
+                                    </form>
+
+
+                                </div>
+                            </th:block>
+
                         </div>
                     </div>
                 </div>

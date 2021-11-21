@@ -1,11 +1,10 @@
 package com.example.arsenalfinalproject.web;
 
-import com.example.arsenalfinalproject.model.view.NewsViewModel;
+import com.example.arsenalfinalproject.model.view.NewsDetailsView;
 import com.example.arsenalfinalproject.service.NewsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
@@ -21,7 +20,7 @@ public class HomeController {
     @GetMapping("/")
     public String home(Model model) {
 
-        List<NewsViewModel> allNews = newsService.findAllNews();
+        List<NewsDetailsView> allNews = newsService.findAllNews();
 
         model.addAttribute("allnews" , allNews);
 

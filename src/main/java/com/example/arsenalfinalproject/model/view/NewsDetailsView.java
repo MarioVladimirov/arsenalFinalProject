@@ -4,16 +4,18 @@ import com.example.arsenalfinalproject.model.entity.UserEntity;
 
 import java.time.LocalDate;
 
-public class NewsViewModel {
+public class NewsDetailsView {
 
     private Long id;
     private String urlPictureNews;
+    private String publicId;
     private String Topic;
     private String description;
     private UserEntity user;
     private LocalDate localDate;
+    private boolean canDelete;
 
-    public NewsViewModel() {
+    public NewsDetailsView() {
     }
 
     public Long getId() {
@@ -63,4 +65,23 @@ public class NewsViewModel {
     public void setLocalDate(LocalDate localDate) {
         this.localDate = localDate;
     }
+
+    public boolean isCanDelete() {
+        return canDelete;
+    }
+
+    public NewsDetailsView setCanDelete(boolean canDelete) {
+        this.canDelete = canDelete;
+        return this;
+    }
+    public String getPublicId() {
+        return publicId;
+    }
+
+    public NewsDetailsView setPublicId(String publicId) {
+        this.publicId = publicId;
+        return this;
+    }
+
+
 }

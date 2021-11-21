@@ -73,83 +73,63 @@ public class ProductServiceImpl implements ProductService {
     public void initializeProduct() throws IOException {
 
         if (productRepository.count() == 0) {
+
             ProductEntity product1 = new ProductEntity();
             product1.setCountProduct(30);
             product1.setPrice(BigDecimal.valueOf(3));
-
-//            PictureEntity pictureEntity = pictureService
-//                    .createPictureEntityByPathInit("static/images/shop/cards.jpg",
-//                            "cards_cmbdgq");
-
-
-
-
-            PictureEntity pictureEntity = 
+            PictureEntity pictureEntity =
                     pictureService.createPictureEntityByPathInit("src/main/resources/static/images/shop/cards.jpg");
             product1.setPicture(pictureEntity);
 
             product1.setProductName("Playing cards \"Arsenal Bulgaria");
 
-            ProductEntity product2 = new ProductEntity();
-            product2.setCountProduct(25);
-            product2.setPrice(BigDecimal.valueOf(8));
-            product2.setProductName("Key ring \"15 years ASCB\"");
-            product2.setPicture( pictureService.createPictureEntityByPathInit
-                    ("src/main/resources/static/images/shop/keyRing.jpg"));
-
-
-            ProductEntity product3 = new ProductEntity();
-            product3.setCountProduct(65);
-            product3.setPrice(BigDecimal.valueOf(10));
-            product3.setProductName("Silicone bracelet \"Arsenal Bulgaria\"");
-            product3.setPicture( pictureService.createPictureEntityByPathInit
-                    ("src/main/resources/static/images/shop/siliconeBracelet.jpg"));
-
-            ProductEntity product4 = new ProductEntity();
-            product4.setCountProduct(15);
-            product4.setPrice(BigDecimal.valueOf(35));
-            product4.setProductName("Backpack \"Arsenal Bulgaria\"");
-            product4.setPicture( pictureService.createPictureEntityByPathInit
-                    ("src/main/resources/static/images/shop/backpack.jpg"));
-
-
-            ProductEntity product5 = new ProductEntity();
-            product5.setCountProduct(25);
-            product5.setPrice(BigDecimal.valueOf(29));
-            product5.setProductName("Т-shirt \"Bulgarian Gooners\"");
-            product5.setPicture( pictureService.createPictureEntityByPathInit
-                    ("src/main/resources/static/images/shop/tshirtPolo.jpg"));
-
-            ProductEntity product6 = new ProductEntity();
-            product6.setCountProduct(55);
-            product6.setPrice(BigDecimal.valueOf(68));
-            product6.setProductName("Ian Wright - A Life In Football");
-            product6.setPicture( pictureService.createPictureEntityByPathInit
-                    ("src/main/resources/static/images/shop/book.jpg"));
-
-//            ProductEntity product7 = new ProductEntity();
-//            product7.setCountProduct(23);
-//            product7.setPrice(BigDecimal.valueOf(6));
-//            product7.setUrlPicture("https://res.cloudinary.com/mariovl/image/upload/v1635949786/shop/glass_up1yxk.jpg");
-////            product7.setUrlPicture(pictureToString("src/main/resources/static/images/shop/glass.jpg"));
-//            product7.setProductName("Beer glass \"Arsenal Bulgaria\" 420ml");
+//            ProductEntity product2 = new ProductEntity();
+//            product2.setCountProduct(25);
+//            product2.setPrice(BigDecimal.valueOf(8));
+//            product2.setProductName("Key ring \"15 years ASCB\"");
+//            product2.setPicture( pictureService.createPictureEntityByPathInit
+//                    ("src/main/resources/static/images/shop/keyRing.jpg"));
 //
-//            ProductEntity product8 = new ProductEntity();
-//            product8.setCountProduct(42);
-//            product8.setPrice(BigDecimal.valueOf(8));
-//            product8.setUrlPicture("https://res.cloudinary.com/mariovl/image/upload/v1635949786/shop/pencil_f31naj.jpg");
-////            product8.setUrlPicture(pictureToString("src/main/resources/static/images/shop/pencil.jpg"));
-//            product8.setProductName("Pencil case \"Arsenal Bulgaria\"");
+//
+//            ProductEntity product3 = new ProductEntity();
+//            product3.setCountProduct(65);
+//            product3.setPrice(BigDecimal.valueOf(10));
+//            product3.setProductName("Silicone bracelet \"Arsenal Bulgaria\"");
+//            product3.setPicture( pictureService.createPictureEntityByPathInit
+//                    ("src/main/resources/static/images/shop/siliconeBracelet.jpg"));
+//
+//            ProductEntity product4 = new ProductEntity();
+//            product4.setCountProduct(15);
+//            product4.setPrice(BigDecimal.valueOf(35));
+//            product4.setProductName("Backpack \"Arsenal Bulgaria\"");
+//            product4.setPicture( pictureService.createPictureEntityByPathInit
+//                    ("src/main/resources/static/images/shop/backpack.jpg"));
+//
+//
+//            ProductEntity product5 = new ProductEntity();
+//            product5.setCountProduct(25);
+//            product5.setPrice(BigDecimal.valueOf(29));
+//            product5.setProductName("Т-shirt \"Bulgarian Gooners\"");
+//            product5.setPicture( pictureService.createPictureEntityByPathInit
+//                    ("src/main/resources/static/images/shop/tshirtPolo.jpg"));
+//
+//            ProductEntity product6 = new ProductEntity();
+//            product6.setCountProduct(55);
+//            product6.setPrice(BigDecimal.valueOf(68));
+//            product6.setProductName("Ian Wright - A Life In Football");
+//            product6.setPicture( pictureService.createPictureEntityByPathInit
+//                    ("src/main/resources/static/images/shop/book.jpg"));
+
+
 
 
             productRepository.save(product1);
-            productRepository.save(product2);
-            productRepository.save(product3);
-            productRepository.save(product4);
-            productRepository.save(product5);
-            productRepository.save(product6);
-//            productRepository.save(product7);
-//            productRepository.save(product8);
+//            productRepository.save(product2);
+//            productRepository.save(product3);
+//            productRepository.save(product4);
+//            productRepository.save(product5);
+//            productRepository.save(product6);
+
 
         }
     }
@@ -206,7 +186,6 @@ public class ProductServiceImpl implements ProductService {
         PictureEntity pictureEntity = pictureService.createPictureEntity(productAddBindingModel.getPicture());
 
         newProduct.setPicture(pictureEntity);
-
         ProductEntity savedProduct = productRepository.save(newProduct);
 
         return modelMapper.map(savedProduct, ProductAddServiceModel.class);
@@ -230,7 +209,7 @@ public class ProductServiceImpl implements ProductService {
         if (productOpt.isEmpty() || caller.isEmpty()) {
             return false;
         } else {
-            ProductEntity productEntity = productOpt.get();
+           // ProductEntity productEntity = productOpt.get();
 
             return isAdmin(caller.get());
         }

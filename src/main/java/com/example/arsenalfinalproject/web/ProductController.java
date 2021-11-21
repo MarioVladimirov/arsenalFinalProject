@@ -75,7 +75,7 @@ public class ProductController {
             redirectAttributes.addFlashAttribute(
                     "org.springframework.validation.BindingResult.productUpdateBindingModel",
                     bindingResult);
-            return "redirect:" + id + "/edit/errors";
+            return "redirect:"+ "/" + id + "/edit/errors";
 
         }
 

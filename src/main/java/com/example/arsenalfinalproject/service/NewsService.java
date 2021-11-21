@@ -1,18 +1,29 @@
 package com.example.arsenalfinalproject.service;
 
-import com.example.arsenalfinalproject.model.view.NewsViewModel;
+import com.example.arsenalfinalproject.model.binding.NewsAddBindingModel;
+import com.example.arsenalfinalproject.model.service.NewsAddServiceModel;
+import com.example.arsenalfinalproject.model.view.NewsDetailsView;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface NewsService {
 
 
-    List<NewsViewModel> findAllNews();
+    List<NewsDetailsView> findAllNews();
 
-    void initializeNews();
+    void initializeNews() throws IOException;
 
-    NewsViewModel findById(Long id);
+    NewsDetailsView findById(Long id , String currentUser);
 
     boolean isExistId(Long id);
+
+
+    NewsAddServiceModel addNews(NewsAddBindingModel newsAddBindingModel, String userIdentifier) throws IOException;
+
+    void deleteProduct(Long id, String publicId);
+
+    boolean isOwner(String userName , Long id);
+
 
 }

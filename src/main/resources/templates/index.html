@@ -57,7 +57,9 @@
                         <div class="fakeimg">
                             <img th:src="${m.urlPictureNews}" alt="" height="300px">
                         </div>
-                        <p th:text="${#strings.substring(m.description,0,350) + '...'}">Някои твърдят, че футбола е „мъжка“ игра. Оооо, тeзи хора явно никога не са гледали как го
+                        <p th:text="${m.description.length() > 350} ?
+                        ${#strings.substring(m.description,0,350) + '...'} :
+                        ${m.description}">Някои твърдят, че футбола е „мъжка“ игра. Оооо, тeзи хора явно никога не са гледали как го
                             играят
                             представителките на „нежния“ пол. Нещо повече, те със сигурност не са били на игрищата на
                             „Грийнспорт“ в столичния квартал Слатина миналата събота. А, трябваше! Защото, така щяха да
@@ -68,8 +70,8 @@
                         </p>
                         <button class="button" style="vertical-align:middle"><a th:href="@{/news/details/{id}(id=*{m.id})}">read more </a></button>
 
-                        <button sec:authorize="hasAnyRole('ADMIN') or hasAnyRole('MODERATOR')"
-                                class="button" style="vertical-align:middle"><a>Edit </a></button>
+<!--                        <button sec:authorize="hasAnyRole('ADMIN') or hasAnyRole('MODERATOR')"-->
+<!--                                class="button" style="vertical-align:middle"><a>Edit </a></button>-->
 
                         <hr class="line">
                     </div>

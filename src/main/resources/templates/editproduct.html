@@ -7,24 +7,17 @@
 <header th:replace="fragments/commons :: navigation_menubar"></header>
 
 <main>
-    <div class="item ">
+    <div class="item " style="top: 265px">
         <h1 style="margin-top: 50px;">Edit product</h1>
         <form
                 th:object="${productModel}"
                 th:action="@{/product/{id}/edit(id=*{id})}"
-                th:method="patch">
-            <div class="txt_field">
-                <input
-                        th:field="*{urlPicture}"
-                        th:errorclass="is-invalid"
-                        type="url"
-                        required
-                        name="imageUrl">
-                <p class="invalid-feedback errors alert alert-danger">
-                    Product image URL is required.
-                </p>
+                th:method="patch"  enctype="multipart/form-data">
 
+            <div class="txt_field">
+                <span> <img th:src="*{urlPicture}" class="card-img-top"  alt="..." height="150px" width="120px"/></span>
             </div>
+
             <div class="txt_field">
                 <input type="text"
                        th:field="*{productName}"
@@ -53,8 +46,6 @@
                        class="text-danger invalid-feedback">Count is required and positive or zero.</small>
                 <label>Count</label>
             </div>
-
-
                     <div >
                         <input type="submit" class="btnForm" value="Update"/>
                 </div>
