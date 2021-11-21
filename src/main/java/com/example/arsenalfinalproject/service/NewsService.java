@@ -2,6 +2,7 @@ package com.example.arsenalfinalproject.service;
 
 import com.example.arsenalfinalproject.model.binding.NewsAddBindingModel;
 import com.example.arsenalfinalproject.model.service.NewsAddServiceModel;
+import com.example.arsenalfinalproject.model.service.NewsUpdateServiceModel;
 import com.example.arsenalfinalproject.model.view.NewsDetailsView;
 
 import java.io.IOException;
@@ -25,5 +26,7 @@ public interface NewsService {
 
     boolean isOwner(String userName , Long id);
 
+
+    void updateOffer(NewsUpdateServiceModel newsUpdateServiceModel);
 
 }

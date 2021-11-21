@@ -4,12 +4,14 @@ import com.example.arsenalfinalproject.model.binding.NewsAddBindingModel;
 import com.example.arsenalfinalproject.model.entity.*;
 import com.example.arsenalfinalproject.model.entity.enums.RoleNameEnum;
 import com.example.arsenalfinalproject.model.service.NewsAddServiceModel;
+import com.example.arsenalfinalproject.model.service.NewsUpdateServiceModel;
 import com.example.arsenalfinalproject.model.view.NewsDetailsView;
 import com.example.arsenalfinalproject.repository.NewsRepository;
 import com.example.arsenalfinalproject.service.CloudinaryService;
 import com.example.arsenalfinalproject.service.NewsService;
 import com.example.arsenalfinalproject.service.PictureService;
 import com.example.arsenalfinalproject.service.UserService;
+import com.example.arsenalfinalproject.web.exception.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -143,6 +145,20 @@ public class NewsServiceImpl implements NewsService {
 
             return isAdmin(caller.get()) || newsEntity.getUser().getUsername().equals(userName);
         }
+    }
+
+    @Override
+    public void updateOffer(NewsUpdateServiceModel newsUpdateServiceModel) {
+
+        NewsEntity newsEntity =
+                newsRepository.findById(newsUpdateServiceModel.getId()).orElseThrow(() ->
+                        new ObjectNotFoundException("News with id " + newsUpdateServiceModel.getId() + " not found!"));
+
+            newsEntity.setTopic(newsUpdateServiceModel.getTopic());
+            newsEntity.setDescription(newsUpdateServiceModel.getDescription());
+
+            newsRepository.save(newsEntity);
+
     }
 
     private boolean isAdmin(UserEntity user) {
