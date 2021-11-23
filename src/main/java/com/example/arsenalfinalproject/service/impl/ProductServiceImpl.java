@@ -221,6 +221,26 @@ public class ProductServiceImpl implements ProductService {
         return isAdmin(caller.get());
     }
 
+    @Override
+    public void changeCount(Long idProduct, Integer count) {
+        Optional<ProductEntity> productOpt = productRepository
+                .findById(idProduct);
+
+        ProductEntity productEntity = productOpt.get();
+
+        int currentCount = productEntity.getCountProduct() - count;
+
+
+        if(currentCount == 0) {
+            productRepository.deleteById(idProduct);
+            return;
+       }
+        productEntity.setCountProduct(currentCount);
+
+       productRepository.save(productEntity);
+
+    }
+
     private boolean isAdmin(UserEntity user) {
         return user
                 .getRoles()

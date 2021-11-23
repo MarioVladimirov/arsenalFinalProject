@@ -46,7 +46,7 @@ public class ProductEntity extends BaseEntity{
         this.countProduct = countProduct;
     }
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     public PictureEntity getPicture() {
         return picture;
     }

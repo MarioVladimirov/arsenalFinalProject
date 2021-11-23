@@ -21,6 +21,13 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
     </div>
 
+    <div th:if="${session.messageConfirmBuy}" class="alert alert-primary alert-dismissible fade show" role="alert">
+
+        <p class="text-center" th:text="${session.messageConfirmBuy.message}" ></p>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+
+
 
     <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
 

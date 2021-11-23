@@ -62,6 +62,8 @@ public class UserController {
 
         userService.registerUserAndLogin(userRegisterServiceModel);
 
+
+
         httpSession.setAttribute("message", new Message("Your registration was successful!", "success"));
 
 

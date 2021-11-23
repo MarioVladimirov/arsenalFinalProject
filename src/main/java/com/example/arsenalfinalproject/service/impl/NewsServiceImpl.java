@@ -110,6 +110,7 @@ public class NewsServiceImpl implements NewsService {
                 NewsAddServiceModel.class);
 
         NewsEntity newsEntity = modelMapper.map(newsAddServiceModel, NewsEntity.class);
+
         newsEntity.setLocalDateNews(LocalDate.now());
 
         PictureEntity pictureEntity = pictureService.createPictureEntity(newsAddBindingModel.getPicture());
