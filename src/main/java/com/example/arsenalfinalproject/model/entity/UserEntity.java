@@ -4,6 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -17,7 +18,12 @@ public class UserEntity extends BaseEntity{
         private String email;
         private String password;
         private Set<RoleEntity> roles = new HashSet<>();
-   
+        private String interest;
+        private String favoritePlayer;
+        private String loveTrip;
+        private String description;
+
+
         public UserEntity() {
         }
 
@@ -87,5 +93,44 @@ public class UserEntity extends BaseEntity{
 
         public void setRoles(Set<RoleEntity> roles) {
                 this.roles = roles;
+        }
+
+        @Column
+        public String getInterest() {
+                return interest;
+        }
+
+        public UserEntity setInterest(String interest) {
+                this.interest = interest;
+                return this;
+        }
+        @Column
+        public String getFavoritePlayer() {
+                return favoritePlayer;
+        }
+
+        public UserEntity setFavoritePlayer(String favoritePlayer) {
+                this.favoritePlayer = favoritePlayer;
+                return this;
+        }
+
+        @Column(columnDefinition = "TEXT")
+        public String getLoveTrip() {
+                return loveTrip;
+        }
+
+        public UserEntity setLoveTrip(String loveTrip) {
+                this.loveTrip = loveTrip;
+                return this;
+        }
+
+        @Column(columnDefinition = "TEXT")
+        public String getDescription() {
+                return description;
+        }
+
+        public UserEntity setDescription(String description) {
+                this.description = description;
+                return this;
         }
 }

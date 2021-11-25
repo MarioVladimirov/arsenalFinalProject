@@ -1,17 +1,22 @@
 package com.example.arsenalfinalproject.web;
 
 import com.example.arsenalfinalproject.helper.Message;
+import com.example.arsenalfinalproject.model.binding.ProductUpdateBindingModel;
+import com.example.arsenalfinalproject.model.binding.UserEditBindingModel;
 import com.example.arsenalfinalproject.model.binding.UserRegisterBindingModel;
+import com.example.arsenalfinalproject.model.entity.UserEntity;
+import com.example.arsenalfinalproject.model.service.UserEditServiceModel;
 import com.example.arsenalfinalproject.model.service.UserRegisterServiceModel;
+import com.example.arsenalfinalproject.model.view.UserEditView;
 import com.example.arsenalfinalproject.service.UserService;
+import com.example.arsenalfinalproject.service.impl.ArsenalUser;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
@@ -63,8 +68,8 @@ public class UserController {
         userService.registerUserAndLogin(userRegisterServiceModel);
 
 
-
-        httpSession.setAttribute("message", new Message("Your registration was successful!", "success"));
+        redirectAttributes.addFlashAttribute("registerSuccess" ,
+               "Your registration was successful2!");
 
 
         return "redirect:/";
@@ -90,6 +95,53 @@ public class UserController {
 
         return "redirect:/users/login";
     }
+
+    @GetMapping("/profile/edit")
+    public String viewProfile(@AuthenticationPrincipal ArsenalUser currentUser , Model model) {
+
+
+        UserEditView byUsernameViewModel = userService.findByUsernameViewModel(currentUser.getUserIdentifier());
+
+        UserEditBindingModel userEditBindingModel = modelMapper.map(byUsernameViewModel ,
+                UserEditBindingModel.class);
+
+        model.addAttribute("userEditModel" , userEditBindingModel);
+
+        return "edit-user";
+
+    }
+
+    @PatchMapping("/profile/edit")
+    public String editProfile (@AuthenticationPrincipal ArsenalUser currentUser ,
+                               @Valid UserEditBindingModel userEditBindingModel ,
+                               BindingResult bindingResult ,
+                               RedirectAttributes redirectAttributes ) {
+
+
+            if (bindingResult.hasErrors()) {
+                redirectAttributes.addFlashAttribute("userEditBindingModel", userEditBindingModel);
+                redirectAttributes.addFlashAttribute(
+                        "org.springframework.validation.BindingResult.userEditBindingModel",
+                        bindingResult);
+
+                return "redirect:/users/profile/edit";
+
+            }
+
+        UserEditServiceModel userEditServiceModel = modelMapper.map(userEditBindingModel , UserEditServiceModel.class);
+
+            userService.updateUserProfile(userEditServiceModel , currentUser.getUserIdentifier());
+
+
+            redirectAttributes.addFlashAttribute("updateProfile" ,
+                    "You have successfully made changes to your account ");
+
+        return "redirect:/";
+    }
+
+
+
+
 
 
 }

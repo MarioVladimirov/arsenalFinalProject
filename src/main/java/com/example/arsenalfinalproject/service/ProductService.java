@@ -29,4 +29,6 @@ public interface ProductService {
     boolean isAdmin(String name);
 
     void changeCount(Long idProduct, Integer count);
+
+    ProductEntity findByIdEntity(Long idProduct);
 }

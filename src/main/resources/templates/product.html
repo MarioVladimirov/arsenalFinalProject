@@ -17,7 +17,8 @@
                     <div class="card-body">
                         <h5 th:text="${p.productName}" class="card-title text-center">Playing cards "Arsenal
                             Bulgaria"</h5>
-                        <p th:text="|${p.price} lv.|" class="card-text text-center"> price: 4.00lv</p>
+
+                        <p th:text="${p.countProduct == 0} ? 'Comming soon': (${p.price}) + 'lv.'" class="card-text text-center fw-bold"> price: 4.00lv</p>
 
 <!--                        <div sec:authorize="isAuthenticated()" class="ipsFieldRow_content m-2">-->
 <!--                            <input type="number" name="quantity" size="1" value="1" class="ipsField_short" min="1"-->
@@ -25,7 +26,7 @@
 <!--                                   step="any">-->
 <!--                        </div>-->
 
-                        <div sec:authorize="hasAnyRole('USER') or hasAnyRole('MODERATOR')"
+                        <div th:if="${p.countProduct > 0}" sec:authorize="isAuthenticated()"
                              class="card-footer text-center">
                             <button class="button" style="vertical-align:middle"><a
                                     th:href="@{/order/{id}(id=*{p.id})}">Buy</a></button>
@@ -37,10 +38,8 @@
                                 <button class="button" style="vertical-align:middle"><a
                                         th:href="@{/product/{id}/edit(id=*{p.id})}">Edit</a></button>
                             </div>
+
                             <div class="card-footer text-center">
-
-                                <!--                                <button  class="buttonDelete" style="vertical-align:middle"><a >Delete</a></button>-->
-
                                 <form class="" th:action="@{/product/{id}(id=*{p.id})}" th:method="delete">
                                     <!--                                    <input type="submit" class="" value="Delete"/>-->
                                     <input type="hidden" name="public_id" th:value="${p.publicId}">

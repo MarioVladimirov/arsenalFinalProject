@@ -123,7 +123,8 @@ public class ProductController {
     @Transactional
     @PreAuthorize("@productServiceImpl.isOwner(#principal.name , #id)")
     @DeleteMapping("/{id}")
-    public String deleteProduct(@PathVariable Long id , Principal principal , @RequestParam("public_id") String publicId ){
+    public String deleteProduct(@PathVariable Long id , Principal principal ,
+                                @RequestParam("public_id") String publicId ){
 
         productService.deleteProduct(id , publicId);
 

@@ -2,8 +2,12 @@ package com.example.arsenalfinalproject.service;
 
 import com.example.arsenalfinalproject.model.entity.UserEntity;
 import com.example.arsenalfinalproject.model.service.UserChangeProfileServiceModel;
+import com.example.arsenalfinalproject.model.service.UserEditServiceModel;
 import com.example.arsenalfinalproject.model.service.UserRegisterServiceModel;
+import com.example.arsenalfinalproject.model.view.OrderAllByOneUserViewModel;
+import com.example.arsenalfinalproject.model.view.UserEditView;
 import com.example.arsenalfinalproject.model.view.UserViewModel;
+import com.example.arsenalfinalproject.service.impl.ArsenalUser;
 
 import java.util.List;
 import java.util.Optional;
@@ -35,4 +39,10 @@ public interface UserService {
 
 
     List<UserViewModel> findByKeyword(String keyword);
+
+    UserEditView findByUsernameViewModel(String currentName);
+
+    void updateUserProfile(UserEditServiceModel userEditServiceModel , String currentUser);
+
+//    List<OrderAllByOneUserViewModel> findAllOrderForOneUserByCurrentUser(String currentUser);
 }

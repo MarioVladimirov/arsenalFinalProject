@@ -8,13 +8,15 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Set;
 
 @Entity
 @Table(name = "orders")
-public class OrderEntity extends BaseEntity{
+public class OrderEntity extends BaseEntity {
 
     private UserEntity user;
-    private String  productName;
+    //  private ProductEntity product;
+    private String productName;
     private String address;
     private String mobilePhone;
     private String name;
@@ -22,6 +24,7 @@ public class OrderEntity extends BaseEntity{
     private Integer count;
     private BigDecimal totalSum;
     private LocalDate dateByOrder;
+    private String productUrl;
 
     public OrderEntity() {
     }
@@ -35,15 +38,6 @@ public class OrderEntity extends BaseEntity{
         this.user = user;
     }
 
-    @Column(nullable = false)
-    public String getProductName() {
-        return productName;
-    }
-
-    public OrderEntity setProductName(String productName) {
-        this.productName = productName;
-        return this;
-    }
 
     @Column(nullable = false)
     public String getAddress() {
@@ -65,15 +59,7 @@ public class OrderEntity extends BaseEntity{
         return this;
     }
 
-    @Column(nullable = false)
-    public String getName() {
-        return name;
-    }
 
-    public OrderEntity setName(String name) {
-        this.name = name;
-        return this;
-    }
     @Column(columnDefinition = "TEXT")
     public String getDescription() {
         return description;
@@ -111,6 +97,35 @@ public class OrderEntity extends BaseEntity{
 
     public OrderEntity setDateByOrder(LocalDate dateByOrder) {
         this.dateByOrder = dateByOrder;
+        return this;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    @Column(nullable = false)
+    public OrderEntity setProductName(String productName) {
+        this.productName = productName;
+        return this;
+    }
+
+    @Column(nullable = false)
+    public String getName() {
+        return name;
+    }
+
+    public OrderEntity setName(String name) {
+        this.name = name;
+        return this;
+    }
+
+    public String getProductUrl() {
+        return productUrl;
+    }
+
+    public OrderEntity setProductUrl(String productUrl) {
+        this.productUrl = productUrl;
         return this;
     }
 }

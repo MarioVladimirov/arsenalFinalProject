@@ -1,10 +1,14 @@
 package com.example.arsenalfinalproject.service.impl;
 
+import com.example.arsenalfinalproject.model.entity.OrderEntity;
 import com.example.arsenalfinalproject.model.entity.RoleEntity;
 import com.example.arsenalfinalproject.model.entity.UserEntity;
 import com.example.arsenalfinalproject.model.entity.enums.RoleNameEnum;
 import com.example.arsenalfinalproject.model.service.UserChangeProfileServiceModel;
+import com.example.arsenalfinalproject.model.service.UserEditServiceModel;
 import com.example.arsenalfinalproject.model.service.UserRegisterServiceModel;
+import com.example.arsenalfinalproject.model.view.OrderAllByOneUserViewModel;
+import com.example.arsenalfinalproject.model.view.UserEditView;
 import com.example.arsenalfinalproject.model.view.UserViewModel;
 import com.example.arsenalfinalproject.repository.RoleRepository;
 import com.example.arsenalfinalproject.repository.UserRepository;
@@ -212,6 +216,55 @@ public class UserServiceImpl implements UserService {
 
 
     }
+
+    @Override
+    public UserEditView findByUsernameViewModel(String currentName) {
+
+        return modelMapper.map(userRepository.findByUsername(currentName).get()
+                ,UserEditView.class);
+    }
+
+    @Override
+    public void updateUserProfile(UserEditServiceModel userEditServiceModel , String currentUser) {
+        UserEntity userEntity = userRepository.findByUsername(currentUser).get();
+
+
+            userEntity.setFirstName(userEditServiceModel.getFirstName());
+            userEntity.setLastName(userEditServiceModel.getLastName());
+            userEntity.setEmail(userEditServiceModel.getEmail());
+            userEntity.setDateBirth(userEditServiceModel.getDateBirth());
+            userEntity.setDescription(userEditServiceModel.getDescription());
+            userEntity.setFavoritePlayer(userEditServiceModel.getFavoritePlayer());
+            userEntity.setInterest(userEditServiceModel.getInterest());
+            userEntity.setLoveTrip(userEditServiceModel.getLoveTrip());
+
+
+            userRepository.save(userEntity);
+    }
+
+//    @Override
+//    public List<OrderAllByOneUserViewModel> findAllOrderForOneUserByCurrentUser(String currentUser) {
+//        UserEntity userEntity = userRepository.findByUsername(currentUser).get();
+//
+//        List<OrderEntity> allOrder = userEntity.getAllOrder();
+//
+//
+//
+//        return allOrder
+//                    .stream()
+//                    .map(product -> {
+//                        OrderAllByOneUserViewModel currentProduct = new OrderAllByOneUserViewModel();
+//                        currentProduct
+//                                .setUrlPicture(product.getProduct().getPicture().getUrl())
+//                                .setName(product.getName())
+//                                .setDateByOrder(product.getDateByOrder())
+//                                .setTotalSum(product.getTotalSum())
+//                                .setName(product.getUser().getFirstName() + " " + product.getUser().getLastName());
+//                        return currentProduct;
+//                    })
+//                .collect(Collectors.toList());
+//    }
+
     private List<UserViewModel> getUserViewModels(List<UserEntity> userEntity) {
         return
                 userEntity.stream()

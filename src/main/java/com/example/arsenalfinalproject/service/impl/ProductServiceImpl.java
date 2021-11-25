@@ -169,8 +169,7 @@ public class ProductServiceImpl implements ProductService {
         productEntity.setProductName(productUpdateServiceModel.getProductName());
         productEntity.setCountProduct(productUpdateServiceModel.getCountProduct());
         productEntity.setPrice(productUpdateServiceModel.getPrice());
-        //TODO:
-        //  productEntity.setUrlPicture(productUpdateServiceModel.getUrlPicture());
+
 
         productRepository.save(productEntity);
     }
@@ -231,14 +230,19 @@ public class ProductServiceImpl implements ProductService {
         int currentCount = productEntity.getCountProduct() - count;
 
 
-        if(currentCount == 0) {
-            productRepository.deleteById(idProduct);
-            return;
-       }
+//        if(currentCount == 0) {
+//            productRepository.deleteById(idProduct);
+//            return;
+//       }
         productEntity.setCountProduct(currentCount);
 
        productRepository.save(productEntity);
 
+    }
+
+    @Override
+    public ProductEntity findByIdEntity(Long idProduct) {
+        return productRepository.getById(idProduct);
     }
 
     private boolean isAdmin(UserEntity user) {

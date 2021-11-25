@@ -22,4 +22,6 @@ public interface UserRepository extends JpaRepository<UserEntity,Long> {
 
     @Query(value = "select * from users  u where u.username like %:keyword%" , nativeQuery = true )
     List<UserEntity> findByKeyword(@Param("keyword") String keyword);
+
+
 }

@@ -12,20 +12,25 @@
 
 <main>
     <!--    message box for successful registration-->
-
-<!--    <div th:if="${session.message}" class="alert alert-danger text-center">-->
-<!--        Registration was successful !-->
-<!--    </div>-->
-    <div th:if="${session.message}" class="alert alert-primary alert-dismissible fade show" role="alert">
+    <div th:if="${registerSuccess}" class="alert alert-primary alert-dismissible fade show text-center" role="alert">
         Registration was successful and you were logged in !
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
     </div>
 
-    <div th:if="${session.messageConfirmBuy}" class="alert alert-primary alert-dismissible fade show" role="alert">
+<!--        message after add new product-->
 
-        <p class="text-center" th:text="${session.messageConfirmBuy.message}" ></p>
+    <div th:if="${addOrder}" class="alert alert-primary alert-dismissible fade show text-center" role="alert">
+        <p th:text="${addOrder}"></p>
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
     </div>
+
+    <!--        message after user update-->
+    <div th:if="${updateProfile}" class="alert alert-primary alert-dismissible fade show text-center" role="alert">
+        <p th:text="${updateProfile}"></p>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+
+
 
 
 
