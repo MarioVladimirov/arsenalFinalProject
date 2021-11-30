@@ -10,11 +10,12 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.Map;
 
+
 @Service
 public class StatsServiceImpl implements StatsService {
 
     private int anonymousRequests, authRequests;
-    private Map<String, Integer> allRequestsName = new HashMap<>();
+    private final Map<String, Integer> allRequestsName = new HashMap<>();
 
 
     @Override
@@ -40,6 +41,8 @@ public class StatsServiceImpl implements StatsService {
         } else {
             anonymousRequests++;
         }
+
+
     }
 
     @Override
@@ -47,6 +50,12 @@ public class StatsServiceImpl implements StatsService {
         return new StatsView(authRequests, anonymousRequests, allRequestsName);
     }
 
-
+    @Override
+    public void resetHistory() {
+        System.out.println("Reset History");
+        authRequests = 0;
+        anonymousRequests = 0;
+        allRequestsName.clear();
+    }
 }
 

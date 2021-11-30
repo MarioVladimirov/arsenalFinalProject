@@ -6,12 +6,11 @@ public class StatsView {
 
     private final int authRequests;
     private final int anonRequests;
-  private final Map<String, Integer> allRequestsName;
+    private final Map<String, Integer> allRequestsName;
 
     public StatsView(int authRequests, int anonRequests, Map<String, Integer> allRequestsName) {
         this.authRequests = authRequests;
         this.anonRequests = anonRequests;
-
         this.allRequestsName = allRequestsName;
     }
 
