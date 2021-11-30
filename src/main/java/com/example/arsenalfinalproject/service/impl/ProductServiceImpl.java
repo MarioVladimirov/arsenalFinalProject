@@ -120,9 +120,17 @@ public class ProductServiceImpl implements ProductService {
 //            product6.setPicture( pictureService.createPictureEntityByPathInit
 //                    ("src/main/resources/static/images/shop/book.jpg"));
 
+//            ProductEntity membership = new ProductEntity();
+//            membership.setCountProduct(15000);
+//            membership.setPrice(BigDecimal.valueOf(30));
+//            PictureEntity membershipPic =
+//                    pictureService.createPictureEntityByPathInit("src/main/resources/static/images/membership.png");
+//            membership.setPicture(membershipPic);
+//
+//            membership.setProductName("Membership 2021-2022");
 
 
-
+//            productRepository.save(product7);
             productRepository.save(product1);
 //            productRepository.save(product2);
 //            productRepository.save(product3);
@@ -164,7 +172,7 @@ public class ProductServiceImpl implements ProductService {
     public void updateOffer(ProductUpdateServiceModel productUpdateServiceModel) {
         ProductEntity productEntity =
                 productRepository.findById(productUpdateServiceModel.getId()).orElseThrow(() ->
-                        new ObjectNotFoundException("Offer with id " + productUpdateServiceModel.getId() + " not found!"));
+                        new ObjectNotFoundException(productUpdateServiceModel.getId()));
 
         productEntity.setProductName(productUpdateServiceModel.getProductName());
         productEntity.setCountProduct(productUpdateServiceModel.getCountProduct());
@@ -208,7 +216,6 @@ public class ProductServiceImpl implements ProductService {
         if (productOpt.isEmpty() || caller.isEmpty()) {
             return false;
         } else {
-           // ProductEntity productEntity = productOpt.get();
 
             return isAdmin(caller.get());
         }
@@ -243,6 +250,11 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductEntity findByIdEntity(Long idProduct) {
         return productRepository.getById(idProduct);
+    }
+
+    @Override
+    public boolean isExistId(Long id) {
+        return productRepository.existsById(id);
     }
 
     private boolean isAdmin(UserEntity user) {

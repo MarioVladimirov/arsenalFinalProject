@@ -8,7 +8,12 @@
 <header th:replace="fragments/commons :: navigation_menubar"></header>
 
 <main>
-    <table class="table table-striped table-hover ">
+
+    <table class="table table-striped table-hover " id="table">
+
+    </table>
+
+        <table class="table table-striped table-hover">
         <thead>
 
         <tr>
@@ -21,9 +26,7 @@
             </th>
         </tr>
         </thead>
-
         <thead>
-
         <tr>
             <th scope="col">№</th>
             <th scope="col">Username</th>
@@ -58,14 +61,12 @@
 
             </form>
         </tr>
-
-
         </tbody>
     </table>
 
-
 </main>
 <footer th:replace="fragments/commons :: footer"></footer>
+
 
 </body>
 

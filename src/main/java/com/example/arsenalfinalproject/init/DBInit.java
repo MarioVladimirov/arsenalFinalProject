@@ -11,24 +11,23 @@ public class DBInit implements CommandLineRunner {
     private final ProductService productService;
     private final UserService userService;
     private final NewsService newsService;
+    private final CommentService commentService;
 
-
-    public DBInit(MemberTopicService memberTopicService, ProductService productService, UserService userService, NewsService newsService) {
+    public DBInit(MemberTopicService memberTopicService, ProductService productService, UserService userService, NewsService newsService, CommentService commentService) {
         this.memberTopicService = memberTopicService;
         this.productService = productService;
         this.userService = userService;
         this.newsService = newsService;
-
+        this.commentService = commentService;
     }
 
 
     @Override
     public void run(String... args) throws Exception {
-        memberTopicService.initializeTopicMember();
         productService.initializeProduct();
         userService.initializeUsersAndRoles();
         newsService.initializeNews();
-
-
+        memberTopicService.initializeTopicMember();
+        commentService.initializeComments();
     }
 }

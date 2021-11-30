@@ -6,9 +6,7 @@
 
 <!--NAVIGATION BAR AND MENU BAR-->
 <body class="content">
-<header th:replace="fragments/commons :: navigation_menubar">
-
-</header>
+<header th:replace="fragments/commons :: navigation_menubar"></header>
 
 <main>
     <!--    message box for successful registration-->
@@ -17,7 +15,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
     </div>
 
-<!--        message after add new product-->
+    <!--        message after add new product-->
 
     <div th:if="${addOrder}" class="alert alert-primary alert-dismissible fade show text-center" role="alert">
         <p th:text="${addOrder}"></p>
@@ -30,72 +28,62 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
     </div>
 
+    <div th:if="${addNewHistoryByUser}" class="alert alert-primary alert-dismissible fade show text-center"
+         role="alert">
+        <p th:text="${addNewHistoryByUser}"></p>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
 
 
+    <div th:replace="fragments/commons :: slideBar"></div>
 
+    <section class="container">
 
-    <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
+        <div class="row">
+            <div th:replace="fragments/commons :: leftColumn"></div>
 
-        <div class="carousel-inner mx-auto p-4" style="width: 500px;">
-            <div class="carousel-item active" data-bs-interval="5000">
-                <img src="images/bloodDoation.png" class="d-block w-100" alt="...">
+            <div class="main" id="newsContainer">
 
-            </div>
-            <div class="carousel-item" data-bs-interval="5000">
-                <img src="images/membership.png" class="d-block w-100" alt="...">
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark"
-                    data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark"
-                    data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
-        </div>
-
-
-        <section class="container">
-
-            <div class="row">
-                <div th:replace="fragments/commons :: leftColumn"></div>
-
-                <div class="main">
-                    <div th:each="m : ${allnews}" >
-                        <h2 th:text="${m.topic}">Дамите - футбол, вдъхновение, страст и благотворителност!</h2>
-                        <h5 th:text="|от ${m.user.username}, ${m.localDate.toString()}|">от Mario, Dec 7, 2017</h5>
-                        <div class="fakeimg">
-                            <img th:src="${m.urlPictureNews}" alt="" height="300px">
-                        </div>
-                        <p th:text="${m.description.length() > 350} ?
-                        ${#strings.substring(m.description,0,350) + '...'} :
-                        ${m.description}">Някои твърдят, че футбола е „мъжка“ игра. Оооо, тeзи хора явно никога не са гледали как го
-                            играят
-                            представителките на „нежния“ пол. Нещо повече, те със сигурност не са били на игрищата на
-                            „Грийнспорт“ в столичния квартал Слатина миналата събота. А, трябваше! Защото, така щяха да
-                            усетят
-                            една истинска страст, неподправена емоция и хъс, които много често липсват в играта на
-                            мъжете в
-                            тяхната т.н. „мъжка“ игра и които са присъщи само и единствено на „футболните амазонки“..
-                        </p>
-                        <button class="button" style="vertical-align:middle"><a th:href="@{/news/details/{id}(id=*{m.id})}">read more </a></button>
-
-<!--                        <button sec:authorize="hasAnyRole('ADMIN') or hasAnyRole('MODERATOR')"-->
-<!--                                class="button" style="vertical-align:middle"><a>Edit </a></button>-->
-
-                        <hr class="line">
+                <div th:each="n : ${allNews}">
+                    <h2 th:text="${n.topic}">Дамите - футбол, вдъхновение, страст и благотворителност!</h2>
+                    <h5 th:text="|от ${n.user.username}, ${n.localDate.toString()}|">от Mario, Dec 7, 2017</h5>
+                    <div class="fakeimg">
+                        <img th:src="${n.urlPictureNews}" alt="" height="300px">
                     </div>
+                    <p th:text="${n.description.length() > 350} ?
+                        ${#strings.substring(n.description,0,350) + '...'} :
+                        ${n.description}">Някои твърдят,
+                    </p>
+                    <button class="button" style="vertical-align:middle"><a th:href="@{/news/details/{id}(id=*{n.id})}">read
+                        more </a></button>
 
+                    <!--                        <button sec:authorize="hasAnyRole('ADMIN') or hasAnyRole('MODERATOR')"-->
+                    <!--                                class="button" style="vertical-align:middle"><a>Edit </a></button>-->
+                    <hr class="line">
                 </div>
+
+
+                <nav aria-label="Page navigation example" th:if="${totalPages > 1}">
+                    <ul class="pagination">
+<!--                        <li class="page-item"><a class="page-link" href="#">Previous</a></li>-->
+
+                        <li class="page-item" th:each="i: ${#numbers.sequence(1, totalPages)}">
+                            <a class="page-link active"  th:if="${currentPage != i}" th:href="@{'/page/' + ${i}}">[[${i}]]</a>
+                            <span class="page-link" style="background-color: burlywood" th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
+                        </li>
+
+<!--                        <li class="page-item"><a class="page-link" href="#">Next</a></li>-->
+                    </ul>
+                </nav>
+
             </div>
-        </section>
+        </div>
+    </section>
     </div>
 </main>
 
 <footer th:replace="fragments/commons :: footer"></footer>
-
+<script th:src="@{/js/home.js}"></script>
 
 </body>
 

@@ -31,4 +31,6 @@ public interface ProductService {
     void changeCount(Long idProduct, Integer count);
 
     ProductEntity findByIdEntity(Long idProduct);
+
+    boolean isExistId(Long id);
 }

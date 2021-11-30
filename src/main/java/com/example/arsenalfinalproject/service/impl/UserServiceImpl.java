@@ -186,7 +186,7 @@ public class UserServiceImpl implements UserService {
     public void changeProfileRole(UserChangeProfileServiceModel serviceModel) {
         UserEntity userEntity =
                 userRepository.findById(serviceModel.getId()).orElseThrow(() ->
-                        new ObjectNotFoundException("Username with id " + serviceModel.getId() + " not found!"));
+                        new ObjectNotFoundException(serviceModel.getId()));
 
 
         Set<RoleEntity> roleEntity = roleService.getRoleByName(serviceModel.getRole());
@@ -240,6 +240,16 @@ public class UserServiceImpl implements UserService {
 
 
             userRepository.save(userEntity);
+    }
+
+    @Override
+    public boolean isExistId(Long id) {
+        return userRepository.existsById(id);
+    }
+
+    @Override
+    public UserEntity getUserEntityById(Long id) {
+        return userRepository.getById(id);
     }
 
 //    @Override

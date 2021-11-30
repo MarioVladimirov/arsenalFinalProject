@@ -5,9 +5,11 @@ import com.example.arsenalfinalproject.model.binding.ProductUpdateBindingModel;
 import com.example.arsenalfinalproject.model.service.ProductUpdateServiceModel;
 import com.example.arsenalfinalproject.model.view.ProductsViewModel;
 import com.example.arsenalfinalproject.service.ProductService;
-import org.apache.tomcat.util.codec.binary.Base64;
+import com.example.arsenalfinalproject.service.impl.ArsenalUser;
+import com.example.arsenalfinalproject.web.exception.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,7 +20,6 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.security.Principal;
-import java.util.List;
 
 @Controller
 @RequestMapping("/product")
@@ -49,6 +50,8 @@ public class ProductController {
     //UPDATE BY ADMIN
     @GetMapping("/{id}/edit")
     public String editProduct(@PathVariable Long id, Model model ) {
+
+        checkIdExist(id,model);
 
         ProductsViewModel productsViewModel = productService.findById(id);
 
@@ -132,6 +135,15 @@ public class ProductController {
     }
 
 
+
+    private void checkIdExist(Long id , Model model) {
+        boolean isExist = productService.isExistId(id);
+
+        if (!isExist) {
+            model.addAttribute("wrongId", id);
+            throw new ObjectNotFoundException(id);
+        }
+    }
 
 
 }

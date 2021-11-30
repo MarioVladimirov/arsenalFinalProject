@@ -1,17 +1,17 @@
 package com.example.arsenalfinalproject.model.entity;
 
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "membersTopic")
 public class MemberTopicEntity extends BaseEntity {
 
+    private UserEntity user;
     private String title;
     private String description;
-    private String urlTopicPicture;
+    private PictureEntity picture;
+    private boolean isApproved;
 
 
     public MemberTopicEntity() {
@@ -26,7 +26,8 @@ public class MemberTopicEntity extends BaseEntity {
         this.title = title;
     }
 
-    @Column(nullable = false , columnDefinition = "TEXT")
+    @Column(nullable = false )
+    @Lob
     public String getDescription() {
         return description;
     }
@@ -35,12 +36,33 @@ public class MemberTopicEntity extends BaseEntity {
         this.description = description;
     }
 
-    @Column(nullable = false)
-    public String getUrlTopicPicture() {
-        return urlTopicPicture;
+    @ManyToOne
+    public PictureEntity getPicture() {
+        return picture;
     }
 
-    public void setUrlTopicPicture(String urlTopicPicture) {
-        this.urlTopicPicture = urlTopicPicture;
+    public MemberTopicEntity setPicture(PictureEntity picture) {
+        this.picture = picture;
+        return this;
+    }
+
+    @Column(nullable = false)
+    public boolean isApproved() {
+        return isApproved;
+    }
+
+    public MemberTopicEntity setApproved(boolean approved) {
+        isApproved = approved;
+        return this;
+    }
+
+    @ManyToOne
+    public UserEntity getUser() {
+        return user;
+    }
+
+    public MemberTopicEntity setUser(UserEntity user) {
+        this.user = user;
+        return this;
     }
 }

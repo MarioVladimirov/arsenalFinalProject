@@ -44,5 +44,9 @@ public interface UserService {
 
     void updateUserProfile(UserEditServiceModel userEditServiceModel , String currentUser);
 
+    boolean isExistId(Long id);
+
+    UserEntity getUserEntityById(Long id);
+
 //    List<OrderAllByOneUserViewModel> findAllOrderForOneUserByCurrentUser(String currentUser);
 }

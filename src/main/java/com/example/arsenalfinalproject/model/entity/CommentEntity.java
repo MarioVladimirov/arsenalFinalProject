@@ -1,39 +1,61 @@
 package com.example.arsenalfinalproject.model.entity;
 
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "comments")
-public class CommentEntity extends BaseEntity{
+public class CommentEntity extends BaseEntity {
 
-        private String description;
-        private UserEntity user;
-        private NewsEntity news;
+    private Boolean approved;
+    private String textContent;
+    private LocalDateTime created;
+    private UserEntity author;
+    private NewsEntity news;
 
 
     public CommentEntity() {
     }
 
-    @Column(nullable = false, columnDefinition = "TEXT")
-    public String getDescription() {
-        return description;
+    @Column(nullable = false)
+    public Boolean getApproved() {
+        return approved;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public CommentEntity setApproved(Boolean approved) {
+        this.approved = approved;
+        return this;
+    }
+
+    @Column
+    public String getTextContent() {
+        return textContent;
+    }
+
+    public CommentEntity setTextContent(String textContent) {
+        this.textContent = textContent;
+        return this;
+    }
+
+    @Column(name = "created", nullable = false)
+    public LocalDateTime getCreated() {
+        return created;
+    }
+
+    public CommentEntity setCreated(LocalDateTime created) {
+        this.created = created;
+        return this;
     }
 
     @ManyToOne
-    public UserEntity getUser() {
-        return user;
+    public UserEntity getAuthor() {
+        return author;
     }
 
-    public void setUser(UserEntity user) {
-        this.user = user;
+    public CommentEntity setAuthor(UserEntity author) {
+        this.author = author;
+        return this;
     }
 
     @ManyToOne
@@ -41,7 +63,8 @@ public class CommentEntity extends BaseEntity{
         return news;
     }
 
-    public void setNews(NewsEntity news) {
+    public CommentEntity setNews(NewsEntity news) {
         this.news = news;
+        return this;
     }
 }

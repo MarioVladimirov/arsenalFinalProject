@@ -13,6 +13,10 @@ import com.example.arsenalfinalproject.service.PictureService;
 import com.example.arsenalfinalproject.service.UserService;
 import com.example.arsenalfinalproject.web.exception.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -144,7 +148,7 @@ public class NewsServiceImpl implements NewsService {
             NewsEntity newsEntity = newsOpt.get();
 
 
-            return isAdmin(caller.get()) || newsEntity.getUser().getUsername().equals(userName);
+            return isAdmin(caller.get()) || newsEntity.getUser().getUsername().equalsIgnoreCase(userName);
         }
     }
 
@@ -153,7 +157,7 @@ public class NewsServiceImpl implements NewsService {
 
         NewsEntity newsEntity =
                 newsRepository.findById(newsUpdateServiceModel.getId()).orElseThrow(() ->
-                        new ObjectNotFoundException("News with id " + newsUpdateServiceModel.getId() + " not found!"));
+                        new ObjectNotFoundException(newsUpdateServiceModel.getId()));
 
             newsEntity.setTopic(newsUpdateServiceModel.getTopic());
             newsEntity.setDescription(newsUpdateServiceModel.getDescription());
@@ -161,6 +165,8 @@ public class NewsServiceImpl implements NewsService {
             newsRepository.save(newsEntity);
 
     }
+
+
 
     private boolean isAdmin(UserEntity user) {
         return user
@@ -189,6 +195,39 @@ public class NewsServiceImpl implements NewsService {
 
                         .collect(Collectors.toList());
     }
+
+
+    @Override
+    public Page<NewsDetailsView> findPaginated(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize , Sort.by("id").descending());
+
+        List<NewsEntity> allNewsEntity = newsRepository.findAll();
+        Collections.reverse(allNewsEntity);
+
+//        Page<NewsEntity> pageAllNewsDetailsView = this.newsRepository.findAll(pageable, Sort.by(Sort.Direction.ASC,"id"));
+//
+//        Page<NewsDetailsView> map = pageAllNewsDetailsView.map(n -> {
+//            NewsDetailsView newsDetailsView = modelMapper.map(n, NewsDetailsView.class);
+//            newsDetailsView
+//                    .setPublicId(n.getPicture().getPublicId())
+//                    .setUrlPictureNews(n.getPicture().getUrl());
+//            return newsDetailsView;
+//        });
+
+        return         this.newsRepository.findAll(pageable)
+                    .map(n -> {
+            NewsDetailsView newsDetailsView = modelMapper.map(n, NewsDetailsView.class);
+            newsDetailsView
+                    .setPublicId(n.getPicture().getPublicId())
+                    .setUrlPictureNews(n.getPicture().getUrl());
+            return newsDetailsView;
+                    });
+
+    }
+
+
+
+
 
 
 }

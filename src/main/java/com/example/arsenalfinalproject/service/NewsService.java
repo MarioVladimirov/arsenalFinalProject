@@ -4,6 +4,7 @@ import com.example.arsenalfinalproject.model.binding.NewsAddBindingModel;
 import com.example.arsenalfinalproject.model.service.NewsAddServiceModel;
 import com.example.arsenalfinalproject.model.service.NewsUpdateServiceModel;
 import com.example.arsenalfinalproject.model.view.NewsDetailsView;
+import org.springframework.data.domain.Page;
 
 import java.io.IOException;
 import java.util.List;
@@ -29,4 +30,5 @@ public interface NewsService {
 
     void updateOffer(NewsUpdateServiceModel newsUpdateServiceModel);
 
+    Page<NewsDetailsView> findPaginated(int pageNo , int pageSize);
 }

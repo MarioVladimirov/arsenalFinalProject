@@ -114,7 +114,8 @@ public class UserEntity extends BaseEntity{
                 return this;
         }
 
-        @Column(columnDefinition = "TEXT")
+        @Column
+        @Lob
         public String getLoveTrip() {
                 return loveTrip;
         }
@@ -124,7 +125,8 @@ public class UserEntity extends BaseEntity{
                 return this;
         }
 
-        @Column(columnDefinition = "TEXT")
+        @Column
+        @Lob
         public String getDescription() {
                 return description;
         }
