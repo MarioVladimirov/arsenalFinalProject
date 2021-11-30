@@ -1,0 +1,72 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/commons :: head"></head>
+
+
+<body class="content">
+<header th:replace="fragments/commons :: navigation_menubar"></header>
+
+<main>
+    <div class="item ">
+        <h1 style="margin-top: 50px;">Add your history</h1>
+        <form th:action="@{/api/historyuser/add}" th:method="POST" th:object="${topicHistoryBindingModel}"
+              enctype="multipart/form-data">
+
+            <div class="txt_field">
+                <input th:field="*{picture}"
+                       type="file"
+                       required
+                       name="imageUrl"
+                       id="imageUrl">
+                <span></span>
+                <label>Picture</label>
+                <p class="errors alert alert-danger invalid-feedback">
+                    Product picture is required.
+                </p>
+            </div>
+            <div class="txt_field">
+                <input th:field="*{title}"
+                       type="text"
+                       minlength="10"
+                       maxlength="25"
+                       required
+                       th:errorclass="is-invalid"
+                       name="title"
+                       id="title_name">
+
+                <span></span>
+                <label>Title Name</label>
+                <p class="errors alert alert-danger invalid-feedback">
+                    Title is required.
+                </p>
+
+            </div>
+            <div class="form-group">
+                <label class="text-white font-weight-bold" for="description">Description</label>
+                <textarea th:field="*{description}" th:errorclass="is-invalid" name="description" minlength="20"
+                          id="description" type="textarea" class="form-control" rows="3"
+                          placeholder="Description"></textarea>
+                <p class="errors alert alert-danger invalid-feedback">
+                    Description is required.
+                </p>
+            </div>
+
+
+
+
+
+            <button class="btnForm" type="submit">Add your history</button>
+
+        </form>
+
+    </div>
+
+
+</main>
+
+<footer th:replace="fragments/commons :: footer"></footer>
+
+</body>
+
+</html>

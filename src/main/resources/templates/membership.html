@@ -1,0 +1,90 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/commons :: head"></head>
+
+<body class="content">
+<header th:replace="fragments/commons :: navigation_menubar">
+
+</header>
+
+<main>
+
+    <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
+
+        <div class="carousel-inner mx-auto p-4" style="width: 500px;">
+            <div class="carousel-item active" data-bs-interval="5000">
+                <img src="/images/membership/1.jpg" class="d-block w-100" alt="...">
+
+            </div>
+            <div class="carousel-item" data-bs-interval="8000">
+                <img src="/images/membership/2.jpg" class="d-block w-100" alt="...">
+
+            </div>
+            <div class="carousel-item" data-bs-interval="8000">
+                <img src="/images/membership/3.jpg" class="d-block w-100" alt="...">
+
+            </div>
+            <div class="carousel-item" data-bs-interval="8000">
+                <img src="/images/membership/4.jpg" class="d-block w-100" alt="...">
+
+            </div>
+            <div class="carousel-item" data-bs-interval="8000">
+                <img src="/images/membership/5.jpg" class="d-block w-100" alt="...">
+
+            </div>
+            <div class="carousel-item" data-bs-interval="8000">
+                <img src="/images/membership/6.jpg" class="d-block w-100" alt="...">
+
+            </div>
+            <div class="carousel-item" data-bs-interval="8000">
+                 <img src="/images/membership/7.jpg"  class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item" data-bs-interval="8000">
+                <a th:href="@{/product/all}"> <img src="/images/membership/8.jpg"  class="d-block w-100" alt="..."> </a>
+            </div>
+
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark"
+                    data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark"
+                    data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+
+    </div>
+
+    <section class="membership membership__overview">
+
+        <div class="card-group" style="margin-bottom: 25px; background-color: rgb(226, 188, 126);">
+
+            <div class="col mb-4" th:each="t : ${allTopicMember}">
+                <div class="card" >
+                    <img th:src="*{t.urlPicture}" class="card-img-top " alt="...">
+                    <div class="card-body">
+                        <h4 class="card-title" th:text="*{t.title}">Арсенал в България</h4>
+                        <h5 th:text="'Send by '+ *{t.username} ">от Mario,</h5>
+                        <p class="card-text" th:text="*{t.description}">Това е първото гостуване на ФК Арсенал в
+                            България. 2100 привърженици на
+                            "Арсенал" изпълниха гостуващият сектор на Националния стадион и над 200 члена на
+                            фенклуба бяха там.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+
+</main>
+
+<footer th:replace="fragments/commons :: footer"></footer>
+
+
+</body>
+
+</html>

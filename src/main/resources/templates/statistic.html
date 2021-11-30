@@ -1,0 +1,112 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/commons :: head"></head>
+
+<body class="content">
+<header th:replace="fragments/commons :: navigation_menubar">
+
+</header>
+
+<main>
+    <div class="container skill">
+        <div class="row ">
+            <div class="col-6  ">
+
+                <h1>Overall statistic</h1>
+
+                <li>
+                    <h3>Total requests:
+                        <th:block th:text="${stats.getTotalRequests()}"></th:block>
+                    </h3>
+
+
+                    <div class="progress">
+                        <div class="progress-bar bg-success" role="progressbar"
+                             th:style="|width:${stats.getTotalRequests()}%|"
+                             th:attr="aria-valuenow=${stats.getTotalRequests()} , aria-valuemax=${stats.getTotalRequests()} + 100"
+                             aria-valuenow=""
+                             aria-valuemin="0"
+                             aria-valuemax=""></div>
+                    </div>
+
+                    <!--                        <progress style="width: 450px; height: 25px; background-color:crimson;"-->
+                    <!--                                  th:max="${stats.getTotalRequests()} + 100" th:value="${stats.getTotalRequests()}">  </progress>-->
+                </li>
+
+                <li>
+                    <h3>Anonymous requests:
+                        <th:block th:text="${stats.getAnonRequests()}"></th:block>
+                    </h3>
+
+                    <div class="progress">
+                        <div class="progress-bar bg-success" role="progressbar"
+                             th:style="|width:${stats.getAnonRequests()}%|"
+                             th:attr="aria-valuenow=${stats.getAnonRequests()} , aria-valuemax=${stats.getTotalRequests()} + 100"
+                             aria-valuenow=""
+                             aria-valuemin="0"
+                             aria-valuemax=""></div>
+                    </div>
+                    <!--                        <progress style="width: 450px; height: 25px; background-color:crimson;"-->
+                    <!--                                  th:max="${stats.getTotalRequests()} + 100" th:value="${stats.getAnonRequests()}"> </progress>-->
+
+                </li>
+                <li>
+                    <h3>Authorized requests:
+                        <th:block th:text="${stats.getAuthRequests()}"></th:block>
+                    </h3>
+
+                    <div class="progress">
+                        <div class="progress-bar bg-success" role="progressbar"
+                             th:style="|width:${stats.getAuthRequests()}%|"
+                             th:attr="aria-valuenow=${stats.getAuthRequests()} , aria-valuemax=${stats.getTotalRequests()} + 100"
+                             aria-valuenow=""
+                             aria-valuemin="0"
+                             aria-valuemax="">
+
+                        </div>
+                    </div>
+                    <!--                        <progress style="width: 450px; height: 25px; background-color:crimson;"-->
+                    <!--                                  th:max="${stats.getTotalRequests()} + 100" th:value="${stats.getAuthRequests()}"> </progress>-->
+
+                </li>
+            </div>
+            <div class="col-3 ">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th colspan="3" class="">
+                          <h3>Details</h3>
+                        </th>
+                    </tr>
+                    </thead>
+
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Count</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="element,coun:${stats.getAllRequestsName()}">
+                        <th scope="row" th:text="${coun.count}">1</th>
+                        <td th:text="${element.key}">Mark</td>
+                        <td th:text="${element.value}"> Otto</td>
+
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<footer th:replace="fragments/commons :: footer"></footer>
+
+
+</body>
+
+</html>

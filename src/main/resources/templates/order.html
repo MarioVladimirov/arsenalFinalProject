@@ -1,0 +1,131 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/commons :: head"></head>
+
+<body class="content">
+<header th:replace="fragments/commons :: navigation_menubar"></header>
+
+
+<main>
+    <div class="item " style="top: 420px;">
+        <h1 style="margin-top: 50px;">Order</h1>
+        <form th:object="${orderModel}"
+              th:action="@{/order/{id}(id=${idProduct})}"
+              th:method="post">
+            <div class="txt_field">
+                <input
+                        th:field="*{urlPicture}"
+                        type="hidden"
+                        required
+                        readonly="readonly"
+                        name="picture_url"
+                        id="picture_url">
+                <span> <img th:src="*{urlPicture}"  class="card-img-top" alt="..." height="120px" width="70px"/></span>
+                <label></label>
+
+            </div>
+
+            <div class="txt_field">
+                <input
+                        th:field="*{productName}"
+                        type="text"
+                        readonly="readonly"
+                        name="product_name"
+                        id="product_name">
+                <span></span>
+                <label>Product Name</label>
+
+            </div>
+
+            <div class="txt_field">
+                <input
+                        th:field="*{name}"
+                        type="text"
+                        required
+                        name="name"
+                        id="name">
+                <span></span>
+                <label>Full name</label>
+            </div>
+
+            <div class="txt_field">
+                <input
+                        th:field="*{address}"
+                        type="text"
+                        required
+                        name="address"
+                        id="address">
+                <span></span>
+                <label>Address</label>
+            </div>
+
+            <div class="txt_field">
+                <input
+                        th:field="*{mobilePhone}"
+                        type="number"
+                        required
+                        name="phoneMobile"
+                        id="phoneMobile">
+                <span></span>
+                <label>Mobile phone</label>
+            </div>
+
+            <div class="txt_field">
+                <input th:field="*{count}"
+                       type="number"
+                       min="1"
+                       th:max="${maxCount}"
+                       required
+                       name="count"
+                       th:id="count"
+                       th:errorclass="is-invalid"
+                >
+                <span></span>
+                <label>Count</label>
+
+            </div>
+
+            <div class="txt_field">
+                <input
+                        th:field="*{price}"
+                        type="number"
+                        required
+                        readonly="readonly"
+                        name="priceProduct"
+                        th:id="priceProduct">
+                <span></span>
+                <label>Price /lv/</label>
+            </div>
+
+            <div class="form-group">
+                <label class="text-white font-weight-bold" for="description">Description</label>
+                <textarea th:field="*{description}" th:errorclass="is-invalid" name="description"
+                          id="description" type="textarea" class="form-control" rows="3"
+                          placeholder="Description"></textarea>
+                <p class="errors alert alert-danger invalid-feedback">
+                    Description is required.
+                </p>
+            </div>
+
+
+            <button class="btnForm" type="submit">Buy</button>
+
+        </form>
+
+    </div>
+
+
+</main>
+
+
+<footer th:replace="fragments/commons :: footer"></footer>
+
+
+<script src="js/bootstrap.bundle.min.js"></script>
+<script src="js/script.js"></script>
+</body>
+
+</html>
+
+

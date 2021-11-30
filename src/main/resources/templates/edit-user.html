@@ -1,0 +1,142 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/commons :: head"></head>
+
+<body class="content">
+<header th:replace="fragments/commons :: navigation_menubar"></header>
+
+<main>
+    <div class="item " style="top: 265px">
+        <h1 style="margin-top: 210px;" >Edit User</h1>
+        <form
+                th:object="${userEditModel}"
+                th:action="@{/users/profile/edit}"
+                th:method="patch"  >
+
+            <div class="txt_field">
+                <input type="text"
+                       required
+                       minlength="2"
+                       maxlength="20"
+                       th:field="*{username}"
+                       th:errorclass="is-invalid"
+                       name="first_name">
+                <span></span>
+                <label>First Name</label>
+                <small id="usernameError"
+                       class="text-danger invalid-feedback">First name should be between 2 and 20 characters</small>
+            </div>
+
+            <div class="txt_field">
+                <input type="text"
+                       required
+                       minlength="2"
+                       maxlength="20"
+                       th:field="*{firstName}"
+                       th:errorclass="is-invalid"
+                       name="first_name">
+                <span></span>
+                <label>First Name</label>
+                <small id="firstNameError"
+                       class="text-danger invalid-feedback">First name should be between 2 and 20 characters</small>
+            </div>
+            <div class="txt_field">
+                <input type="text"
+                       required
+                       minlength="2"
+                       maxlength="20"
+                       th:field="*{lastName}"
+                       th:errorclass="is-invalid"
+                       name="last_name">
+                <span></span>
+                <label>Last Name</label>
+                <small id="lastNameError"
+                       class="text-danger invalid-feedback">Last name should be between 2 and 20 characters</small>
+
+            </div>
+
+            <div class="txt_field">
+                <input type="date"
+                       required
+                       th:field="*{dateBirth}"
+                       th:errorclass="is-invalid"
+                       name="day_birth">
+                <span></span>
+                <label>Date birth</label>
+                <small id="dateBirthError"
+                       class="text-danger invalid-feedback">Required</small>
+
+            </div>
+            <div class="txt_field">
+                <input type="email"
+                       required
+                       th:field="*{email}"
+                       th:errorclass="is-invalid"
+                       name="email">
+                <span></span>
+                <label>Email Address</label>
+                <small th:if="${#fields.hasErrors('email')}" th:errors="*{email}" id="emailError"
+                       class="text-danger invalid-feedback">Please enter a valid email address.</small>
+            </div>
+
+            <div class="txt_field">
+                <input type="text"
+                       required
+                       minlength="10"
+                       th:field="*{favoritePlayer}"
+                       th:errorclass="is-invalid"
+                       name="favoritePlayer">
+                <span></span>
+                <label>"What is your favorite players ?"</label>
+                <small id="favoritePlayerError"
+                       class="text-danger invalid-feedback">Favorite player should be greater than 10 characters</small>
+            </div>
+
+            <div class="txt_field">
+                <input type="text"
+                       required
+                       minlength="10"
+                       th:field="*{interest}"
+                       th:errorclass="is-invalid"
+                       name="interest">
+                <span></span>
+                <label>"What is your interest ?"</label>
+                <small id="interestError"
+                       class="text-danger invalid-feedback">Your interest  should be greater than 10 characters</small>
+            </div>
+
+            <div class="form-group">
+                <label class="text-white font-weight-bold" for="description">Description</label>
+                <textarea th:field="*{loveTrip}" th:errorclass="is-invalid" name="description"
+                          id="lovetrip" type="textarea" class="form-control" rows="3" th:min="10"
+                          placeholder="What is your favorite trip with Arsenal-Bulgaria ?"></textarea>
+                <p class="errors alert alert-danger invalid-feedback">
+                     Should be greater than 10 characters
+                </p>
+            </div>
+
+            <div class="form-group">
+                <label class="text-white font-weight-bold" for="description">Description</label>
+                <textarea th:field="*{description}" th:errorclass="is-invalid" name="description"
+                          id="description" type="textarea" class="form-control" rows="3" th:min="10"
+                          placeholder="Description"></textarea>
+                <p class="errors alert alert-danger invalid-feedback">
+                    Description should be greater than 10 characters
+                </p>
+            </div>
+                    <div >
+                        <input type="submit" class="btnForm" value="Update"/>
+                </div>
+
+        </form>
+
+    </div>
+
+
+</main>
+<footer th:replace="fragments/commons :: footer"></footer>
+
+</body>
+
+</html>
