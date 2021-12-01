@@ -48,5 +48,7 @@ public interface UserService {
 
     UserEntity getUserEntityById(Long id);
 
+    boolean isAdmin(String name);
+
 //    List<OrderAllByOneUserViewModel> findAllOrderForOneUserByCurrentUser(String currentUser);
 }

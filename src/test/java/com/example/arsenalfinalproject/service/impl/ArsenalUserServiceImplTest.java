@@ -42,7 +42,6 @@ import java.util.stream.Collectors;
         adminRole = new RoleEntity();
         adminRole.setRole(RoleNameEnum.ADMIN);
 
-
         testUser = new UserEntity();
         testUser.setUsername("Mario");
         testUser.setEmail("mario@abv.bg");
@@ -65,7 +64,8 @@ import java.util.stream.Collectors;
             Mockito.when(mockUserRepository.findByUsername(testUser.getUsername())).
                     thenReturn(Optional.of(testUser));
 
-            var actual = serviceToTest.loadUserByUsername(testUser.getUsername());
+            var actual =
+                    serviceToTest.loadUserByUsername(testUser.getUsername());
 
             Assertions.assertEquals(actual.getUsername() , testUser.getUsername());
 

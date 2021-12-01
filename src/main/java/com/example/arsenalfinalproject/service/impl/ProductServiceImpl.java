@@ -51,22 +51,7 @@ public class ProductServiceImpl implements ProductService {
         this.pictureService = pictureService1;
     }
 
-    //Convert picture path to bite[] and save to DB
-    public String pictureToString(String path) throws IOException {
-        byte[] array = new byte[0];
-        try {
-            array = Files.readAllBytes(Paths.get(path));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
-        MultipartFile multipartFile = new MockMultipartFile("name",
-                array);
-
-        return Base64.getEncoder().encodeToString(multipartFile.getBytes());
-
-
-    }
 
 
     @Override
@@ -216,16 +201,11 @@ public class ProductServiceImpl implements ProductService {
         if (productOpt.isEmpty() || caller.isEmpty()) {
             return false;
         } else {
-
             return isAdmin(caller.get());
         }
     }
 
-    @Override
-    public boolean isAdmin(String userName) {
-        Optional<UserEntity> caller = userService.findByUsername(userName);
-        return isAdmin(caller.get());
-    }
+
 
     @Override
     public void changeCount(Long idProduct, Integer count) {
@@ -237,19 +217,16 @@ public class ProductServiceImpl implements ProductService {
         int currentCount = productEntity.getCountProduct() - count;
 
 
-//        if(currentCount == 0) {
-//            productRepository.deleteById(idProduct);
-//            return;
-//       }
+
         productEntity.setCountProduct(currentCount);
 
        productRepository.save(productEntity);
 
     }
-
+//return productRepository.getById(idProduct);
     @Override
     public ProductEntity findByIdEntity(Long idProduct) {
-        return productRepository.getById(idProduct);
+        return productRepository.findById(idProduct).get();
     }
 
     @Override

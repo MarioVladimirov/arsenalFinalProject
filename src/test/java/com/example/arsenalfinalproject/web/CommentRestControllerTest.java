@@ -55,8 +55,8 @@ public class CommentRestControllerTest {
 
     @AfterEach
     void tearDown() {
-        userRepository.deleteAll();
         newsRepository.deleteAll();
+        userRepository.deleteAll();
     }
 
     @Test
@@ -72,11 +72,9 @@ public class CommentRestControllerTest {
         testNews.setTopic("Topic news ");
         testNews.setLocalDateNews(LocalDate.parse("2004-01-22"));
         testNews.setDescription("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        PictureEntity n = new PictureEntity();
-        n.setUrl("aaaaaaaaa");
-        n.setPublicId("12342142342");
 
-        testNews.setPicture(n);
+
+
 
         testNews = newsRepository.save(testNews);
 

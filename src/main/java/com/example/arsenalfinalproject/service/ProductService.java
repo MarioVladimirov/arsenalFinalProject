@@ -26,7 +26,7 @@ public interface ProductService {
 
     boolean isOwner(String userName , Long id);
 
-    boolean isAdmin(String name);
+//    boolean isAdmin(String name);
 
     void changeCount(Long idProduct, Integer count);
 

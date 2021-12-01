@@ -2,14 +2,15 @@ package com.example.arsenalfinalproject.web;
 
 import com.example.arsenalfinalproject.model.binding.ProductAddBindingModel;
 import com.example.arsenalfinalproject.model.binding.ProductUpdateBindingModel;
+import com.example.arsenalfinalproject.model.entity.RoleEntity;
+import com.example.arsenalfinalproject.model.entity.enums.RoleNameEnum;
 import com.example.arsenalfinalproject.model.service.ProductUpdateServiceModel;
 import com.example.arsenalfinalproject.model.view.ProductsViewModel;
 import com.example.arsenalfinalproject.service.ProductService;
-import com.example.arsenalfinalproject.service.impl.ArsenalUser;
+import com.example.arsenalfinalproject.service.UserService;
 import com.example.arsenalfinalproject.web.exception.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,10 +28,12 @@ public class ProductController {
 
     private final ProductService productService;
     private final ModelMapper modelMapper;
+    private final UserService userService;
 
-    public ProductController(ProductService productService, ModelMapper modelMapper) {
+    public ProductController(ProductService productService, ModelMapper modelMapper, UserService userService) {
         this.productService = productService;
         this.modelMapper = modelMapper;
+        this.userService = userService;
     }
 
 
@@ -41,7 +44,8 @@ public class ProductController {
 
 
         if (principal != null) {
-            model.addAttribute("isAdmin", productService.isAdmin(principal.getName()));
+
+            model.addAttribute("isAdmin", userService.isAdmin(principal.getName()));
         }
 
         return "product";

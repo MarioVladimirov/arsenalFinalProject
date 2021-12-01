@@ -1,9 +1,13 @@
 spring:
-
   sql:
     init:
       mode: never
-
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: create-drop
+
+
+cloudinary:
+  api-key: test
+  api-secret: test
+  cloud-name: test

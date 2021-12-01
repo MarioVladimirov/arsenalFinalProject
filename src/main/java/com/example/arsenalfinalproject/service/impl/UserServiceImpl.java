@@ -148,6 +148,7 @@ public class UserServiceImpl implements UserService {
         // Registration in Spring and login user auto
 
         UserDetails principal = arsenalUserService.loadUserByUsername(newUser.getUsername());
+
         Authentication authentication = new UsernamePasswordAuthenticationToken(
                 principal,
                 newUser.getPassword(),
@@ -250,6 +251,17 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserEntity getUserEntityById(Long id) {
         return userRepository.getById(id);
+    }
+
+    @Override
+    public boolean isAdmin(String name) {
+        UserEntity userEntity = userRepository.findByUsername(name).get();
+        return
+                userEntity
+                        .getRoles()
+                        .stream()
+                        .map(RoleEntity::getRole)
+                        .anyMatch(r -> r== RoleNameEnum.ADMIN);
     }
 
 //    @Override

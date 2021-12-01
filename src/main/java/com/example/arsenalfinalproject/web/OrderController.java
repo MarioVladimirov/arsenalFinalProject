@@ -99,6 +99,7 @@ public class OrderController {
 
         orderService.saveNewOrder(id , orderBindingModel , userName.getUserIdentifier());
 
+        //View front end message that you bought product
         Integer count = orderBindingModel.getCount();
         BigDecimal multiply = orderBindingModel.getPrice().multiply(BigDecimal.valueOf(count));
 
