@@ -11,3 +11,4 @@ cloudinary:
   api-key: test
   api-secret: test
   cloud-name: test
+

@@ -2,9 +2,11 @@ package com.example.arsenalfinalproject.init;
 
 import com.example.arsenalfinalproject.service.*;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 @Component
+@ConditionalOnProperty(name = "environment", havingValue = "prd")
 public class DBInit implements CommandLineRunner {
 
     private final MemberTopicService memberTopicService;
