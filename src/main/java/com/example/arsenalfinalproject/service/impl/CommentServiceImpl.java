@@ -1,6 +1,8 @@
 package com.example.arsenalfinalproject.service.impl;
 
 import com.example.arsenalfinalproject.model.entity.CommentEntity;
+import com.example.arsenalfinalproject.model.entity.NewsEntity;
+import com.example.arsenalfinalproject.model.entity.UserEntity;
 import com.example.arsenalfinalproject.model.service.CommentServiceModel;
 import com.example.arsenalfinalproject.model.view.CommentViewModel;
 import com.example.arsenalfinalproject.repository.CommentRepository;
@@ -66,7 +68,8 @@ public class CommentServiceImpl implements CommentService {
 
         var author = userRepository.
                 findByUsername(commentServiceModel.getCreator()).
-                orElseThrow(() ->  new ObjectNotFoundException(commentServiceModel.getRouteId()));
+                orElseThrow(() ->
+                        new ObjectNotFoundException(commentServiceModel.getRouteId()));
 
         CommentEntity newComment = new CommentEntity();
         newComment.setApproved(false);
@@ -81,7 +84,7 @@ public class CommentServiceImpl implements CommentService {
         return mapAsComment(savedComment);
     }
 
-    @Transactional
+@Transactional
     @Override
     public List<CommentViewModel> getComments(Long newsId) {
 

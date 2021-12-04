@@ -68,7 +68,6 @@ public class UserController {
 
         userService.registerUserAndLogin(userRegisterServiceModel);
 
-
         redirectAttributes.addFlashAttribute("registerSuccess",
                 "Your registration was successful2!");
 

@@ -19,6 +19,10 @@
       "name": "cloudinary.cloud-name",
       "type": "java.lang.String",
       "description": "Description for cloudinary.cloud-name."
+    },
+    {
+      "name": "servlet.jpa.database-platform",
+      "type": "java.lang.String",
+      "description": "Description for servlet.jpa.database-platform."
     }
-
   ] }
