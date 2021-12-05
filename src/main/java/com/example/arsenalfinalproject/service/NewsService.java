@@ -12,7 +12,7 @@ import java.util.List;
 public interface NewsService {
 
 
-    List<NewsDetailsView> findAllNews();
+//    List<NewsDetailsView> findAllNews();
 
     void initializeNews() throws IOException;
 

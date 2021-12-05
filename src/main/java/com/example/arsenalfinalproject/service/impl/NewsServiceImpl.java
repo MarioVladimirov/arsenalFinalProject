@@ -177,24 +177,24 @@ public class NewsServiceImpl implements NewsService {
     }
 
 
-    @Override
-    public List<NewsDetailsView> findAllNews() {
-        List<NewsEntity> allNewsEntity = newsRepository.findAll();
-        Collections.reverse(allNewsEntity);
-
-        return
-                allNewsEntity.stream()
-                        .map(n -> {
-                            NewsDetailsView newsDetailsView = modelMapper.map(n, NewsDetailsView.class);
-                            newsDetailsView
-                                    .setPublicId(n.getPicture().getPublicId())
-                                    .setUrlPictureNews(n.getPicture().getUrl());
-
-                            return newsDetailsView;
-                        })
-
-                        .collect(Collectors.toList());
-    }
+//    @Override
+//    public List<NewsDetailsView> findAllNews() {
+//        List<NewsEntity> allNewsEntity = newsRepository.findAll();
+//        Collections.reverse(allNewsEntity);
+//
+//        return
+//                allNewsEntity.stream()
+//                        .map(n -> {
+//                            NewsDetailsView newsDetailsView = modelMapper.map(n, NewsDetailsView.class);
+//                            newsDetailsView
+//                                    .setPublicId(n.getPicture().getPublicId())
+//                                    .setUrlPictureNews(n.getPicture().getUrl());
+//
+//                            return newsDetailsView;
+//                        })
+//
+//                        .collect(Collectors.toList());
+//    }
 
 
     @Override
