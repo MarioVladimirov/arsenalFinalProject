@@ -29,6 +29,7 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
@@ -159,7 +160,7 @@ class NewsControllerTest {
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andExpect(status().is3xxRedirection());
 
-        var actual = newsRepository.findById(1L).get().getTopic();
+        var actual = newsRepository.findAll().get(0).getTopic();
 
         Assertions.assertEquals("new topic" , actual);
 
@@ -183,6 +184,32 @@ class NewsControllerTest {
 
     }
 
+    @Test
+    @WithUserDetails(value = TEST_USERNAME)
+    void testGetNewsPageCorrectView() throws Exception {
+
+        mockMvc.perform(get("/news/add"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("addnews"));
+
+
+    }
+
+    @Test
+    @WithUserDetails(value = TEST_USERNAME)
+    void testAddNewsErrorData() throws Exception {
+
+
+        mockMvc
+                .perform(post("/news/add")
+                        .param("picture" , "1DD")
+                        .param("Topic" ,"" )
+                        .param("description" , " description new ... ")
+                        .with(csrf())
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED))
+                .andExpect(redirectedUrl("/news/add"));
+
+    }
 
 
 
