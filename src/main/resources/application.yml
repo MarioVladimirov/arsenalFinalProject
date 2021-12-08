@@ -4,31 +4,31 @@ spring:
     url: "jdbc:mysql://localhost:3306/arsenalLondonDB?useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC"
     username: root
     password: 1234
+  sql:
+    init:
+      mode: always
+
   servlet:
     multipart:
       max-file-size: 30MB
       max-request-size: 30MB
-    mvc:
-      hiddenmethod:
-        filter:
-          enabled: true
-    sql:
-      init:
-        mode: always
-    jpa:
-      # Choose either MySQL 8 or MySQL 5 below
-      # For MySQL 8
-      #database-platform: org.hibernate.dialect.MySQL8Dialect
-      #For MySQL 5
-      database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+  jpa:
+    # Choose either MySQL 8 or MySQL 5 below
+    # For MySQL 8
+    #database-platform: org.hibernate.dialect.MySQL8Dialect
+    #For MySQL 5
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate:
+      ddl-auto: create-drop
+    open-in-view: false
+    properties:
       hibernate:
-        ddl-auto: create
-      open-in-view: false
-      properties:
-        hibernate:
-          format_sql: true
-      defer-datasource-initialization: true
-
+        format_sql: true
+    defer-datasource-initialization: true
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
 
 cloudinary:
   api-key: 593539337716691
