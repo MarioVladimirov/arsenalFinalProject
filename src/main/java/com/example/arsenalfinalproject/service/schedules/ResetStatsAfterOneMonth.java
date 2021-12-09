@@ -3,8 +3,8 @@ import com.example.arsenalfinalproject.service.StatsService;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import javax.ejb.Schedule;
-import java.time.LocalDateTime;
+
+
 
 
 @Component
