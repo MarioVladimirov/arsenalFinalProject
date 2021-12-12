@@ -31,7 +31,8 @@
 
             <div class="txt_field">
                 <input th:field="*{price}"
-                        type="text"
+                        type="number"
+                       min="0"
                        required
                        name="price">
                 <small id="priceError"
@@ -40,7 +41,8 @@
             </div>
             <div class="txt_field">
                 <input th:field="*{countProduct}"
-                        type="text"
+                        type="number"
+                          min="0"
                         required
                         name="price">
                 <small id="countProductError"
