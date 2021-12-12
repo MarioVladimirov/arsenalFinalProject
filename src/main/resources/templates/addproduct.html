@@ -27,30 +27,39 @@
             </div>
             <div class="txt_field">
                 <input th:field="*{productName}"
+                       th:errorclass="is-invalid"
                        type="text"
                        required
                        name="product_name"
                        id="product_name">
                 <span></span>
                 <label>Product Name</label>
+                <small id="productError"
+                       class="text-danger invalid-feedback">Required</small>
             </div>
             <div class="txt_field">
                 <input th:field="*{price}"
+                       th:errorclass="is-invalid"
                        type="text"
                        required
                        name="price"
                        id="price">
                 <span></span>
                 <label>Price</label>
+                <small id="priceError"
+                       class="text-danger invalid-feedback">Required or positive number</small>
             </div>
             <div class="txt_field">
                 <input th:field="*{countProduct}"
+                       th:errorclass="is-invalid"
                        type="text"
                        required
                        name="count"
                        id="count">
                 <span></span>
                 <label>Count</label>
+                <small id="countError"
+                       class="text-danger invalid-feedback">Required or positive number</small>
             </div>
             <button class="btnForm" type="submit">Add new product</button>
 

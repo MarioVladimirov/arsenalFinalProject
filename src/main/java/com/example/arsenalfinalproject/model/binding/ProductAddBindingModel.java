@@ -39,7 +39,7 @@ public class ProductAddBindingModel {
     }
 
     @NotNull
-    @Positive
+    @Positive(message = "It must be positive")
     public BigDecimal getPrice() {
         return price;
     }

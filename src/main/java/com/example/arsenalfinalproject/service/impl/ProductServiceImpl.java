@@ -68,13 +68,13 @@ public class ProductServiceImpl implements ProductService {
 
             product1.setProductName("Playing cards \"Arsenal Bulgaria");
 
-//            ProductEntity product2 = new ProductEntity();
-//            product2.setCountProduct(25);
-//            product2.setPrice(BigDecimal.valueOf(8));
-//            product2.setProductName("Key ring \"15 years ASCB\"");
-//            product2.setPicture( pictureService.createPictureEntityByPathInit
-//                    ("src/main/resources/static/images/shop/keyRing.jpg"));
-//
+            ProductEntity product2 = new ProductEntity();
+            product2.setCountProduct(25);
+            product2.setPrice(BigDecimal.valueOf(8));
+            product2.setProductName("Key ring \"15 years ASCB\"");
+            product2.setPicture( pictureService.createPictureEntityByPathInit
+                    ("src/main/resources/static/images/shop/keyRing.jpg"));
+
 //
 //            ProductEntity product3 = new ProductEntity();
 //            product3.setCountProduct(65);
@@ -98,30 +98,31 @@ public class ProductServiceImpl implements ProductService {
 //            product5.setPicture( pictureService.createPictureEntityByPathInit
 //                    ("src/main/resources/static/images/shop/tshirtPolo.jpg"));
 //
-//            ProductEntity product6 = new ProductEntity();
-//            product6.setCountProduct(55);
-//            product6.setPrice(BigDecimal.valueOf(68));
-//            product6.setProductName("Ian Wright - A Life In Football");
-//            product6.setPicture( pictureService.createPictureEntityByPathInit
-//                    ("src/main/resources/static/images/shop/book.jpg"));
+            ProductEntity product6 = new ProductEntity();
+            product6.setCountProduct(55);
+            product6.setPrice(BigDecimal.valueOf(68));
+            product6.setProductName("Ian Wright - A Life In Football");
+            product6.setPicture( pictureService.createPictureEntityByPathInit
+                    ("src/main/resources/static/images/shop/book.jpg"));
 
-//            ProductEntity membership = new ProductEntity();
-//            membership.setCountProduct(15000);
-//            membership.setPrice(BigDecimal.valueOf(30));
-//            PictureEntity membershipPic =
-//                    pictureService.createPictureEntityByPathInit("src/main/resources/static/images/membership.png");
-//            membership.setPicture(membershipPic);
-//
-//            membership.setProductName("Membership 2021-2022");
+            ProductEntity membership = new ProductEntity();
+            membership.setCountProduct(15000);
+            membership.setPrice(BigDecimal.valueOf(30));
+            PictureEntity membershipPic =
+                    pictureService.createPictureEntityByPathInit("src/main/resources/static/images/membership.png");
+            membership.setPicture(membershipPic);
+
+            membership.setProductName("Membership 2021-2022");
 
 
-//            productRepository.save(product7);
+            productRepository.save(membership);
             productRepository.save(product1);
 //            productRepository.save(product2);
 //            productRepository.save(product3);
 //            productRepository.save(product4);
 //            productRepository.save(product5);
-//            productRepository.save(product6);
+            productRepository.save(product6);
+
 
 
         }

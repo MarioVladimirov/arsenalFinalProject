@@ -30,6 +30,7 @@
                 <div class="form-group">
                     <label class="text-white font-weight-bold" for="description">Description</label>
                     <textarea th:field="*{description}" th:errorclass="is-invalid" name="description"
+                              required minlength="20"
                               id="description" type="textarea" class="form-control" rows="3"
                               placeholder="Description"></textarea>
 

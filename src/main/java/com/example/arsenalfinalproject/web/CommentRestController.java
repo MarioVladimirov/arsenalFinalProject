@@ -34,8 +34,9 @@ public class CommentRestController {
     @GetMapping("/api/{newsId}/comments")
     public ResponseEntity<List<CommentViewModel>> getComments(
             @PathVariable Long newsId,
-            Principal principal
-    ) {
+            Principal principal) {
+
+
         return ResponseEntity.ok(
                 commentService.getComments(newsId));
     }

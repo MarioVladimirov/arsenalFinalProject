@@ -84,7 +84,7 @@ public class CommentServiceImpl implements CommentService {
         return mapAsComment(savedComment);
     }
 
-@Transactional
+    @Transactional
     @Override
     public List<CommentViewModel> getComments(Long newsId) {
 

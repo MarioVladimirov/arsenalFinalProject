@@ -133,7 +133,7 @@ public class MemberTopicServiceImpl implements MemberTopicService {
         memberTopicEntity.
                 setUser(userEntity).
                 setPicture(pictureEntity).
-                setApproved(false);
+                setApproved(true);
 
         memberTopicRepository.save(memberTopicEntity);
 

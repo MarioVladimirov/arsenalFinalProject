@@ -1,5 +1,3 @@
-
-
 // Quiz
 const quizData = [
     {
@@ -53,7 +51,7 @@ const quizData = [
         correct: "d"
     },
     {
-        question: "Кой отбеляза драматичния победен гол, който осигури титлата в лигата през 1989 г.?",
+        question: "Кой е победи във финала КНК през 1994г.",
         a: "Парма",
         b: "Галатасарай",
         c: "Геноа",
@@ -98,16 +96,36 @@ const startBtn = document.getElementById("submitStart");
 
 
 let currentQuiz = 0;
-let score = 0;
+let currentScore = 0;
 let allScore = 0;
-
+let allPointScore;
+let currentUsername;
+let allUserPointAdnUsername = [];
 
 startBtn.addEventListener('click', () => {
+    const csrfHeaderName = document.head.querySelector('[name="_csrf_header"]').content;
+    const csrfHeaderValue = document.head.querySelector('[name="_csrf"]').content;
 
-fetch(`http://localhost:8080/api/games/quest`)
-    .then(response => console.log(response));
 
-    quiz.innerHTML = `  
+    fetch(`http://localhost:8080/api/games/quest`)
+        .then(response => response.json().then(data => {
+            for (let point of data) {
+                allUserPointAdnUsername.push(point);
+            }
+            console.log("Here")
+            startGame(allUserPointAdnUsername)
+        }));
+
+    function startGame(all) {
+        console.log("All:")
+        console.log(all)
+        all.map((uap) => {
+                currentUsername = uap.username.toString();
+                allPointScore = parseInt(uap.score.toString());
+            }
+        )
+
+        quiz.innerHTML = `  
   <div class="quiz-container" id="quiz" style="width: 550px;">
 <div class="quiz-header">
 <h2 id="question">Question Text</h2>
@@ -138,94 +156,120 @@ fetch(`http://localhost:8080/api/games/quest`)
 </div>
 </div>`
 
-    qusetionEl = document.getElementById('question');
-    loadQuestion()
-    submitBtn = document.getElementById('submit');
-    answerEls = document.querySelectorAll('.answer');
-    loadQuiz()
+        qusetionEl = document.getElementById('question');
+        loadQuestion()
+        submitBtn = document.getElementById('submit');
+        answerEls = document.querySelectorAll('.answer');
+        loadQuiz()
 
-    function loadQuestion() {
-        a_text = document.getElementById('a_text');
-        b_text = document.getElementById('b_text');
-        c_text = document.getElementById('c_text');
-        d_text = document.getElementById('d_text');
-    }
-
-
-    function loadQuiz() {
-
-        const currentQuizData = quizData[currentQuiz];
-
-        qusetionEl.innerText = currentQuizData.question;
-        a_text.innerText = currentQuizData.a;
-        b_text.innerText = currentQuizData.b;
-
-        c_text.innerText = currentQuizData.c;
-        d_text.innerText = currentQuizData.d;
-
-        deselectAnswers();
+        function loadQuestion() {
+            a_text = document.getElementById('a_text');
+            b_text = document.getElementById('b_text');
+            c_text = document.getElementById('c_text');
+            d_text = document.getElementById('d_text');
+        }
 
 
-    }
+        function loadQuiz() {
 
-    function deselectAnswers() {
+            const currentQuizData = quizData[currentQuiz];
 
-        answerEls.forEach(answerEl => answerEl.checked = false);
+            qusetionEl.innerText = currentQuizData.question;
+            a_text.innerText = currentQuizData.a;
+            b_text.innerText = currentQuizData.b;
 
-    }
+            c_text.innerText = currentQuizData.c;
+            d_text.innerText = currentQuizData.d;
 
-    function getSelected() {
-
-        let answer;
-        answerEls.forEach(answerEl => {
-
-
-            if (answerEl.checked) {
-                answer = answerEl.id;
-            }
-        })
-
-        return answer;
-    }
-
-
-    submitBtn.addEventListener('click', () => {
-
-
-        const answer = getSelected();
-        if (answer) {
-            if (answer === quizData[currentQuiz].correct) {
-                score++;
-
-            }
-            currentQuiz++;
+            deselectAnswers();
 
 
         }
-        if (currentQuiz < quizData.length) {
-            loadQuiz();
-        } else {
-            let txt1 = "";
 
-            if (score < 4) {
-                txt1 = "Да не сте фен на Тотнъм :)"
-            } else if (score <= 9) {
-                txt1 = "Може и по-добре"
-            } else {
-                txt1 = "Истински артилерист !!!!"
+        function deselectAnswers() {
+
+            answerEls.forEach(answerEl => answerEl.checked = false);
+
+        }
+
+        function getSelected() {
+
+            let answer;
+            answerEls.forEach(answerEl => {
+
+
+                if (answerEl.checked) {
+                    answer = answerEl.id;
+                }
+            })
+
+            return answer;
+        }
+
+
+        submitBtn.addEventListener('click', () => {
+
+
+            const answer = getSelected();
+            if (answer) {
+                if (answer === quizData[currentQuiz].correct) {
+                    currentScore++;
+
+                }
+                currentQuiz++;
+
+
             }
+            if (currentQuiz < quizData.length) {
+                loadQuiz();
+            } else {
+                let txt1 = "";
+
+                if (currentScore < 4) {
+                    txt1 = "Да не сте фен на Тотнъм :)"
+                } else if (currentScore <= 9) {
+                    txt1 = "Може и по-добре"
+                } else {
+                    txt1 = "Истински артилерист !!!!"
+                }
+
+                allPointScore += currentScore;
+
+                let data = {
+                    username: currentUsername
+                    , score: allPointScore
+                };
+
+                console.log(data)
+
+                console.log("after json")
+                console.log(JSON.stringify(data))
+
+                let url = "http://localhost:8080/api/games/quest";
+                fetch(url, {
+                    body: JSON.stringify(data),
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    },
+                }).then(response => {
+                    console.log("response")
+                    console.log(response.json())
+                    return response.json();
+                })
 
 
-            quiz.innerHTML = `
-      <h2>Вашият резултат ${score}/${quizData.length} </h2>
+                quiz.innerHTML = `
+      <h2>Вашият резултат ${currentScore}/${quizData.length} </h2>
       <h2>${txt1}</h2>
       <button onClick="location.reload()">Повтори</button>
       `
-        }
+            }
 
-        console.log('answer', answer)
-    })
-
+            console.log('answer', answer)
+        })
+    }
 });
 
 

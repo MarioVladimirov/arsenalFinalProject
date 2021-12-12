@@ -1,6 +1,8 @@
 package com.example.arsenalfinalproject.model.binding;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 public class NewsUpdateBindingModel {
 
@@ -31,7 +33,8 @@ public class NewsUpdateBindingModel {
         return this;
     }
 
-    @NotBlank
+    @NotEmpty
+    @Size(min = 10, max = 25)
     public String getTopic() {
         return Topic;
     }
@@ -41,7 +44,8 @@ public class NewsUpdateBindingModel {
         return this;
     }
 
-    @NotBlank
+    @NotEmpty
+    @Size(min = 20, message = "Description must be more 20 characters")
     public String getDescription() {
         return description;
     }

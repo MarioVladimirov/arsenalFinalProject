@@ -1,11 +1,10 @@
 package com.example.arsenalfinalproject.service;
 
-import com.example.arsenalfinalproject.model.view.GamesScoreUserViewModel;
-import com.example.arsenalfinalproject.model.view.UserViewModel;
-
-import java.util.List;
+import com.example.arsenalfinalproject.model.view.GameViewModel;
 
 public interface GameService {
 
-    List<UserViewModel> getScoreByUser(String userName);
+    GameViewModel getScoreByUser(String userName);
+
+
 }

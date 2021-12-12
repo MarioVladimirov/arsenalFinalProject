@@ -109,6 +109,7 @@ public class NewsController {
 
         if (!model.containsAttribute("newsAddBindingMode")) {
             model.addAttribute("newsAddBindingMode", new NewsAddBindingModel());
+
         }
 
 
@@ -122,9 +123,9 @@ public class NewsController {
                           @AuthenticationPrincipal ArsenalUser user) throws IOException {
 
         if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("newsAddBindingModel", newsAddBindingModel);
-            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.newsAddBindingModel"
-                    , bindingResult);
+            redirectAttributes.addFlashAttribute("topicHistoryBindingModel", newsAddBindingModel);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.newsAddBindingModel", bindingResult);
+
 
             return "redirect:/news/add";
         }

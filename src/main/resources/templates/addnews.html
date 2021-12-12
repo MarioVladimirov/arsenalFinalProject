@@ -17,6 +17,7 @@
 
             <div class="txt_field">
                 <input th:field="*{picture}"
+                       th:errorclass="is-invalid"
                        type="file"
                        required
                        name="imageUrl"
@@ -29,27 +30,32 @@
             </div>
             <div class="txt_field">
                 <input th:field="*{topic}"
+                       th:errorclass="is-invalid"
+                       minlength="10"
+                       maxlength="25"
                        type="text"
                        required
                        name="topic"
                        id="topic">
                 <span></span>
                 <label>Topic</label>
-                <p class="errors alert alert-danger invalid-feedback">
-                   News topic is required.
-                </p>
+<!--                <p class="errors alert alert-danger invalid-feedback">-->
+<!--                   News topic is required.-->
+<!--                </p>-->
+                <small id="topicError"
+                       class="text-danger invalid-feedback">     News topic is required</small>
+
             </div>
 
             <div class="form-group">
                 <label class="text-white font-weight-bold" for="description">Description</label>
-                <textarea th:field="*{description}" th:errorclass="is-invalid" name="description"
+                <textarea th:field="*{description}" th:errorclass="is-invalid" name="description" minlength="20"
                           id="description" type="textarea" class="form-control" rows="3"
                           placeholder="Description"></textarea>
                 <p class="errors alert alert-danger invalid-feedback">
                     Description is required.
                 </p>
             </div>
-
 
             <button class="btnForm" type="submit">Add new news</button>
 
@@ -59,62 +65,8 @@
 
 
 </main>
-<footer class="bg-light text-center text-white">
-    <!-- Grid container -->
-    <div class="container p-4 pb-0">
-        <!-- Section: Social media -->
-        <section class="mb-4">
-            <!-- Facebook -->
-            <a class="btn btn-primary btn-floating m-1" style="background-color: #3b5998;"
-               href="https://www.facebook.com/arsenalbulgaria/" ; role="button"><i
-                    class="fab fa-facebook-f"></i></a>
 
-            <!-- Twitter -->
-            <a class="btn btn-primary btn-floating m-1" style="background-color: #55acee;"
-               href="https://twitter.com/arsenalbulgaria" ; role="button"><i class="fab fa-twitter"></i></a>
-
-            <!-- Instagram -->
-
-            <a class="btn btn-primary btn-floating m-1" style="background-color:  #ac2bac;"
-               href="https://www.instagram.com/arsenalbulgaria/" ; role="button"><i
-                    class="fab fa-instagram"></i></a>
-            <!-- Youtube -->
-            <a class="btn btn-primary btn-floating m-1" style="background-color: #a31f1f;"
-               href="https://www.youtube.com/user/ArsenalSCBulgaria" ; role="button"><i
-                    class="fab fa-youtube-square"></i>
-            </a>
-        </section>
-        <!-- Section: Social media -->
-    </div>
-    <!-- Grid container -->
-
-    <!-- Copyright -->
-    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-        © 2020 Copyright: Arsenal-Bulgaria
-    </div>
-    <!-- Copyright -->
-</footer>
-
-
-<!-- <footer>
-    <div class="inner-footer">
-
-        <div class="social-links">
-                <ul>
-                    <li class="social-items"><a href="https://www.facebook.com/arsenalbulgaria/"><i class="fab fa-facebook"></i></a></li>
-                    <li class="social-items"><a href="https://twitter.com/arsenalbulgaria"><i class="fab fa-twitter-square"></i></a></li>
-                    <li class="social-items"><a href="https://www.instagram.com/arsenalbulgaria/"><i class="fab fa-instagram"></i></a></li>
-                    <li class="social-items"><a href="https://www.youtube.com/user/ArsenalSCBulgaria"><i class="fab fa-youtube-square"></i></a></li>
-                </ul>
-        </div>
-        <div class="outer-footer">
-            © Arsenal Supporters Club Bulgaria.
-        </div>
-    </div>
-
-
-
-</footer> -->
+<footer th:replace="fragments/commons :: footer"></footer>
 
 <script src="js/bootstrap.bundle.min.js"></script>
 <script src="js/script.js"></script>
