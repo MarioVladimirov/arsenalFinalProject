@@ -1,14 +1,17 @@
 package com.example.arsenalfinalproject.web;
 
-import com.example.arsenalfinalproject.model.view.CommentViewModel;
+import com.example.arsenalfinalproject.model.binding.GamesScoreUserBindingModel;
+import com.example.arsenalfinalproject.model.service.GameUpdateService;
 import com.example.arsenalfinalproject.model.view.GameViewModel;
 import com.example.arsenalfinalproject.service.CommentService;
 import com.example.arsenalfinalproject.service.GameService;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,10 +21,12 @@ public class QuizRestController {
 
     private final GameService gameService;
  private final CommentService commentService;
+ private final ModelMapper modelMapper;
 
-    public QuizRestController(GameService gameService, CommentService commentService) {
+    public QuizRestController(GameService gameService, CommentService commentService, ModelMapper modelMapper) {
         this.gameService = gameService;
         this.commentService = commentService;
+        this.modelMapper = modelMapper;
     }
 
 
@@ -45,12 +50,17 @@ public class QuizRestController {
         return ResponseEntity.ok(all);
     }
 
-    @PostMapping("/api/games/quest")
+    @PatchMapping("/api/games/quest")
     public ResponseEntity<GameViewModel> newPoint(
             @AuthenticationPrincipal UserDetails principal ,
-            @RequestBody GameViewModel gameViewModel) {
+            @RequestBody @Valid GamesScoreUserBindingModel gamesScoreUserBindingModel) {
 
-        System.out.println();
+        GameUpdateService gameUpdateService = modelMapper
+                .map(gamesScoreUserBindingModel , GameUpdateService.class);
+
+    gameService.updateScore(gameUpdateService);
+
+
 
 
         return null;

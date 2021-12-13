@@ -236,29 +236,37 @@ startBtn.addEventListener('click', () => {
                 allPointScore += currentScore;
 
                 let data = {
-                    username: currentUsername
-                    , score: allPointScore
+                    "username": currentUsername
+                    , "score": allPointScore
                 };
 
                 console.log(data)
 
-                console.log("after json")
+                console.log("Make to JSON: ")
                 console.log(JSON.stringify(data))
+                const csrfHeaderName = document.head.querySelector('[name="_csrf_header"]').content;
+                const csrfHeaderValue = document.head.querySelector('[name="_csrf"]').content;
+
+                console.log("-----------")
+                console.log(csrfHeaderName);
+                console.log(csrfHeaderValue)
 
                 let url = "http://localhost:8080/api/games/quest";
-                fetch(url, {
-                    body: JSON.stringify(data),
-                    method: "POST",
+                const fetchOptions = {
+                    method: "PATCH",
                     headers: {
+                        [csrfHeaderName] : csrfHeaderValue,
                         "Content-Type": "application/json",
                         "Accept": "application/json"
                     },
-                }).then(response => {
-                    console.log("response")
-                    console.log(response.json())
-                    return response.json();
-                })
+                    body: JSON.stringify(data)
+                }
+                console.log("Fetch options")
+                console.log(fetchOptions)
+                const response = fetch(url, fetchOptions);
 
+                console.log("Response:")
+                console.log(response)
 
                 quiz.innerHTML = `
       <h2>Вашият резултат ${currentScore}/${quizData.length} </h2>

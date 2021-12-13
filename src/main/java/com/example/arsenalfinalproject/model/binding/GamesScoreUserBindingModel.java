@@ -6,6 +6,7 @@ public class GamesScoreUserBindingModel {
 
 
         private Integer score;
+        private String username;
 
     public GamesScoreUserBindingModel() {
     }
@@ -17,6 +18,15 @@ public class GamesScoreUserBindingModel {
 
     public GamesScoreUserBindingModel setScore(Integer score) {
         this.score = score;
+        return this;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public GamesScoreUserBindingModel setUsername(String username) {
+        this.username = username;
         return this;
     }
 }

@@ -2,6 +2,7 @@ package com.example.arsenalfinalproject.service.impl;
 
 import com.example.arsenalfinalproject.model.entity.GameEntity;
 import com.example.arsenalfinalproject.model.entity.UserEntity;
+import com.example.arsenalfinalproject.model.service.GameUpdateService;
 import com.example.arsenalfinalproject.model.view.GameViewModel;
 import com.example.arsenalfinalproject.repository.GameRepository;
 import com.example.arsenalfinalproject.service.GameService;
@@ -42,6 +43,20 @@ public class GameServiceImpl implements GameService {
         }
 //
         return gameViewModel;
+    }
+
+    @Override
+    public void updateScore(GameUpdateService gameUpdateService) {
+
+        Optional<UserEntity> currentUsername = userService.findByUsername(gameUpdateService.getUsername());
+
+        Optional<GameEntity> currentGame = gameRepository
+                .findByUserId(currentUsername.get().getId());
+
+        currentGame.get().setScore(gameUpdateService.getScore());
+
+        gameRepository.save(currentGame.get());
+
     }
 
 //    @Override

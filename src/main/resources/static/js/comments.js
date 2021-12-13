@@ -58,19 +58,31 @@ async function handleCommentSubmit(event) {
 async function postFormDataAsJson({url, formData}) {
 
     const plainFormData = Object.fromEntries(formData.entries());
+    console.log("Plain formData:")
+    console.log(plainFormData)
     const formDataAsJSONString = JSON.stringify(plainFormData);
+    console.log("Make to JSON")
+    console.log(formDataAsJSONString)
 
+    console.log("-----------")
+    console.log(csrfHeaderName);
+    console.log(csrfHeaderValue)
     const fetchOptions = {
         method: "POST",
         headers: {
             [csrfHeaderName] : csrfHeaderValue,
-            "Content-Type" : "application/json",
+            "Content-Type" : "applicathttp://localhost:8080/api/1/commentsion/json",
             "Accept" :"application/json"
         },
         body: formDataAsJSONString
     }
 
+    console.log("Fetch options:")
+    console.log(fetchOptions)
+
+    console.log("Response: ")
     const response = await fetch(url, fetchOptions);
+
 
     if (!response.ok) {
         const errorMessage = await response.text();
